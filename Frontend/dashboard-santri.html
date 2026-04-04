@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Santri — TPQ Akhlaqul Qurro'</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/dashboard.css" />
+  </head>
+  <body>
+    <!-- Sidebar Overlay (mobile) -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside id="sidebar" class="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <a href="./index.html" class="flex items-center gap-3">
+          <div
+            class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+            style="
+              background: rgba(255, 255, 255, 0.15);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
+                fill="white"
+                opacity=".9"
+              />
+              <polygon
+                points="16,3 16.5,4.5 18,4.5 16.9,5.4 17.3,6.9 16,6 14.7,6.9 15.1,5.4 14,4.5 15.5,4.5"
+                fill="#F5C842"
+              />
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold text-white text-xs leading-tight">
+              TPQ Akhlaqul Qurro'
+            </p>
+            <p
+              class="text-xs leading-tight"
+              style="color: rgba(255, 255, 255, 0.5)"
+            >
+              Portal Santri
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Nav -->
+      <nav class="sidebar-nav">
+        <p class="sidebar-section-label">Menu Utama</p>
+        <ul>
+          <li>
+            <button class="nav-item active" data-section="beranda">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="9 22 9 12 15 12 15 22"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Beranda
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-section="progress">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Progress Belajar
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-section="absensi">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="18"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <line
+                  x1="16"
+                  y1="2"
+                  x2="16"
+                  y2="6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="8"
+                  y1="2"
+                  x2="8"
+                  y2="6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="3"
+                  y1="10"
+                  x2="21"
+                  y2="10"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              Absensi
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-section="nilai">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <polyline
+                  points="14 2 14 8 20 8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <line
+                  x1="16"
+                  y1="13"
+                  x2="8"
+                  y2="13"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="16"
+                  y1="17"
+                  x2="8"
+                  y2="17"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Nilai
+              <span class="nav-badge">5</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-section="catatan">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Catatan Ustadz
+              <span class="nav-badge">3</span>
+            </button>
+          </li>
+        </ul>
+
+        <p class="sidebar-section-label mt-4">Lainnya</p>
+        <ul>
+          <li>
+            <a href="./index.html" class="nav-item">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              Halaman Utama
+            </a>
+          </li>
+          <li>
+            <button class="nav-item" onclick="logout()">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Keluar
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- User card -->
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar" id="avatar-text">AF</div>
+          <div class="overflow-hidden">
+            <p class="text-white text-xs font-semibold truncate" id="user-nama">
+              Ahmad Fauzi
+            </p>
+            <p
+              class="text-xs truncate"
+              style="color: rgba(255, 255, 255, 0.5)"
+              id="user-nis"
+            >
+              NIS: 2024001
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <div class="main-content" id="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" id="hamburger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <line
+                x1="3"
+                y1="6"
+                x2="21"
+                y2="6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="3"
+                y1="12"
+                x2="21"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="3"
+                y1="18"
+                x2="21"
+                y2="18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <div>
+            <p class="greeting-text">
+              Assalamu'alaikum, <strong id="topbar-nama">Ahmad</strong> 👋
+            </p>
+            <p class="text-xs text-gray-400" id="user-kelas">Kelas B</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="topbar-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span class="notif-dot"></span>
+          </button>
+          <button class="topbar-btn" onclick="logout()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- ══ SECTION: BERANDA ══ -->
+        <div id="section-beranda" class="dash-section">
+          <!-- Greeting banner -->
+          <div
+            class="rounded-2xl p-6 mb-6 fade-in"
+            style="background: var(--grad-main)"
+          >
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <p class="text-yellow-300 text-sm font-semibold mb-1">
+                  Semangat belajar! 🌟
+                </p>
+                <h2 class="text-white text-xl font-bold" id="banner-nama">
+                  Halo, Ahmad Fauzi!
+                </h2>
+                <p class="text-white/70 text-sm mt-1">
+                  Kamu sudah hadir
+                  <strong class="text-white" id="pct-hadir">82%</strong> bulan
+                  ini. Terus tingkatkan!
+                </p>
+              </div>
+              <div class="text-5xl float">🕌</div>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 fade-in-2">
+            <div class="dash-stat">
+              <div
+                class="dash-stat-icon"
+                style="background: linear-gradient(135deg, #dbeafe, #93c5fd)"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"
+                    stroke="#1d4ed8"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div class="dash-stat-value" id="stat-hadir">18 Hari</div>
+              <div class="dash-stat-label">Kehadiran Bulan Ini</div>
+              <span class="dash-stat-change change-up">↑ 82%</span>
+            </div>
+            <div class="dash-stat">
+              <div
+                class="dash-stat-icon"
+                style="background: linear-gradient(135deg, #dcfce7, #86efac)"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+                    stroke="#15803d"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div class="dash-stat-value" id="stat-nilai">87</div>
+              <div class="dash-stat-label">Rata-rata Nilai</div>
+              <span class="dash-stat-change change-up">↑ Sangat Baik</span>
+            </div>
+            <div class="dash-stat">
+              <div
+                class="dash-stat-icon"
+                style="background: linear-gradient(135deg, #fff3cd, #f5c842)"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    stroke="#a16207"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div class="dash-stat-value" id="stat-ranking">#3</div>
+              <div class="dash-stat-label">Ranking Kelas</div>
+              <span class="dash-stat-change change-up">↑ Top 3</span>
+            </div>
+            <div class="dash-stat">
+              <div
+                class="dash-stat-icon"
+                style="background: linear-gradient(135deg, #ede9fe, #c4b5fd)"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 014 17V4h16v13"
+                    stroke="#7c3aed"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div class="dash-stat-value" id="stat-surah">8 Surah</div>
+              <div class="dash-stat-label">Hafalan Surah</div>
+              <span class="dash-stat-change change-neu">Juz 'Amma</span>
+            </div>
+          </div>
+
+          <!-- Progress ringkasan -->
+          <div class="grid md:grid-cols-2 gap-4 fade-in-3">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">📖 Progress Iqra' & Al-Qur'an</h3>
+                <span class="iqra-badge" id="iqra-level">Iqra' Jilid 4</span>
+              </div>
+              <div class="dash-card-body">
+                <div class="progress-wrap">
+                  <div class="progress-label">
+                    <span class="text-gray-600">Iqra' Jilid 4</span>
+                    <span class="text-navy font-bold" id="iqra-progress-text"
+                      >65%</span
+                    >
+                  </div>
+                  <div class="progress-track">
+                    <div
+                      class="progress-fill gold"
+                      id="iqra-bar"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+                <div class="progress-wrap mb-0">
+                  <div class="progress-label">
+                    <span class="text-gray-600">Al-Qur'an</span>
+                    <span class="text-navy font-bold" id="juz-progress-text"
+                      >2 dari 30 juz</span
+                    >
+                  </div>
+                  <div class="progress-track">
+                    <div
+                      class="progress-fill green"
+                      id="juz-bar"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">📅 Absensi Bulan Ini</h3>
+                <div class="flex items-center gap-3 text-xs">
+                  <span class="flex items-center gap-1"
+                    ><span
+                      class="w-3 h-3 rounded bg-green-100 inline-block"
+                    ></span
+                    >Hadir</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><span
+                      class="w-3 h-3 rounded bg-red-100 inline-block"
+                    ></span
+                    >Absen</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><span
+                      class="w-3 h-3 rounded bg-yellow-100 inline-block"
+                    ></span
+                    >Izin</span
+                  >
+                </div>
+              </div>
+              <div class="dash-card-body">
+                <div class="attend-grid" id="absensi-grid"></div>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                  <div class="progress-label">
+                    <span class="text-gray-600 text-xs">Kehadiran</span>
+                    <span
+                      class="text-navy font-bold text-xs"
+                      id="pct-hadir-2"
+                    ></span>
+                  </div>
+                  <div class="progress-track">
+                    <div
+                      class="progress-fill"
+                      id="bar-hadir"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Catatan terbaru -->
+          <div class="dash-card mt-4 fade-in-4">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">💬 Catatan Terbaru dari Ustadz</h3>
+              <button
+                class="text-xs font-semibold text-navy hover:underline"
+                onclick="
+                  document.querySelector('[data-section=catatan]').click()
+                "
+              >
+                Lihat semua →
+              </button>
+            </div>
+            <div class="dash-card-body">
+              <div id="catatan-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ SECTION: PROGRESS ══ -->
+        <div id="section-progress" class="dash-section hidden">
+          <h2 class="text-xl font-bold text-navy mb-6">📖 Progress Belajar</h2>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <!-- Iqra detail -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">Iqra' & Al-Qur'an</h3>
+              </div>
+              <div class="dash-card-body space-y-5">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="font-semibold text-navy">Iqra' Jilid 4</p>
+                    <span class="iqra-badge text-xs">Sedang Berjalan</span>
+                  </div>
+                  <div class="progress-wrap mb-0">
+                    <div class="progress-label">
+                      <span class="text-gray-500 text-xs"
+                        >Progress jilid ini</span
+                      >
+                      <span class="text-navy font-bold text-xs">65%</span>
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill gold" style="width: 65%"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                  <div class="bg-gray-50 rounded-xl p-3 border border-soft">
+                    <p class="text-lg font-black text-navy">4</p>
+                    <p class="text-xs text-gray-500">Jilid Saat Ini</p>
+                  </div>
+                  <div class="bg-gray-50 rounded-xl p-3 border border-soft">
+                    <p class="text-lg font-black text-navy">2</p>
+                    <p class="text-xs text-gray-500">Juz Selesai</p>
+                  </div>
+                  <div class="bg-gray-50 rounded-xl p-3 border border-soft">
+                    <p class="text-lg font-black text-navy">8</p>
+                    <p class="text-xs text-gray-500">Surah Hafal</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hafalan surah -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">Hafalan Surah</h3>
+              </div>
+              <div class="dash-card-body">
+                <div class="space-y-2">
+                  <div
+                    class="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
+                    <span class="text-sm font-medium">Al-Fatihah</span>
+                    <span class="nilai-pill nilai-A text-xs">✓ Hafal</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
+                    <span class="text-sm font-medium">Al-Ikhlas</span>
+                    <span class="nilai-pill nilai-A text-xs">✓ Hafal</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
+                    <span class="text-sm font-medium">Al-Falaq</span>
+                    <span class="nilai-pill nilai-A text-xs">✓ Hafal</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
+                    <span class="text-sm font-medium">An-Nas</span>
+                    <span class="nilai-pill nilai-A text-xs">✓ Hafal</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
+                    <span class="text-sm font-medium">Al-Kafirun</span>
+                    <span class="nilai-pill nilai-B text-xs">Proses</span>
+                  </div>
+                  <div class="flex items-center justify-between py-2">
+                    <span class="text-sm font-medium">Al-Mulk</span>
+                    <span class="nilai-pill nilai-C text-xs">Belum</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ SECTION: ABSENSI ══ -->
+        <div id="section-absensi" class="dash-section hidden">
+          <h2 class="text-xl font-bold text-navy mb-6">📅 Riwayat Absensi</h2>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">Maret 2026</h3>
+              <div class="flex items-center gap-3 text-xs text-gray-500">
+                <span class="flex items-center gap-1.5"
+                  ><span
+                    class="w-3 h-3 rounded bg-green-100 inline-block border border-green-200"
+                  ></span
+                  >Hadir</span
+                >
+                <span class="flex items-center gap-1.5"
+                  ><span
+                    class="w-3 h-3 rounded bg-red-100 inline-block border border-red-200"
+                  ></span
+                  >Absen</span
+                >
+                <span class="flex items-center gap-1.5"
+                  ><span
+                    class="w-3 h-3 rounded bg-yellow-100 inline-block border border-yellow-200"
+                  ></span
+                  >Izin</span
+                >
+              </div>
+            </div>
+            <div class="dash-card-body">
+              <div class="attend-grid" id="absensi-grid-2"></div>
+              <div class="grid grid-cols-3 gap-4 mt-6 text-center">
+                <div class="bg-green-50 rounded-xl p-4 border border-green-100">
+                  <p class="text-2xl font-black text-green-700">18</p>
+                  <p class="text-xs text-green-600 font-medium mt-1">Hadir</p>
+                </div>
+                <div class="bg-red-50 rounded-xl p-4 border border-red-100">
+                  <p class="text-2xl font-black text-red-700">2</p>
+                  <p class="text-xs text-red-600 font-medium mt-1">Absen</p>
+                </div>
+                <div
+                  class="bg-yellow-50 rounded-xl p-4 border border-yellow-100"
+                >
+                  <p class="text-2xl font-black text-yellow-700">1</p>
+                  <p class="text-xs text-yellow-600 font-medium mt-1">Izin</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ SECTION: NILAI ══ -->
+        <div id="section-nilai" class="dash-section hidden">
+          <h2 class="text-xl font-bold text-navy mb-6">📝 Nilai</h2>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">Nilai Per Mata Pelajaran</h3>
+              <span class="text-xs text-gray-500 font-medium"
+                >Semester Genap 2025/2026</span
+              >
+            </div>
+            <div class="dash-card-body p-0">
+              <div class="overflow-x-auto">
+                <table class="nilai-table">
+                  <thead>
+                    <tr>
+                      <th>Mata Pelajaran</th>
+                      <th>Nilai</th>
+                      <th>Grade</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="nilai-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ SECTION: CATATAN ══ -->
+        <div id="section-catatan" class="dash-section hidden">
+          <h2 class="text-xl font-bold text-navy mb-6">
+            💬 Catatan dari Ustadz
+          </h2>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">Semua Catatan</h3>
+              <span class="text-xs text-gray-500"
+                >Ustadz: <span id="nama-ustadz">Ust. Mahmud</span></span
+              >
+            </div>
+            <div class="dash-card-body">
+              <div id="catatan-list-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/data/santri.js"></script>
+    <script src="./assets/data/jadwal.js"></script>
+    <script src="./assets/js/dash-santri.js"></script>
+  </body>
+</html>
