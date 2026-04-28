@@ -5,32 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portal Santri — TPQ Akhlaqul Qurro'</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-    
-    <!-- Global styles -->
-    <link rel="stylesheet" href="./assets/css/style.css"/>
-    <!-- Page-specific styles -->
-    <link rel="stylesheet" href="./assets/css/pages.css"/>
+    <link rel="stylesheet" href="./assets/css/main-output.css" />
+
   </head>
   <body>
 
-    <!-- ═══ TOAST NOTIFICATION ═══ -->
+    <!-- ═══ TOAST ═══ -->
     <div id="toast" class="toast">
       <span id="toast-msg"></span>
     </div>
 
     <div class="min-h-screen grid md:grid-cols-2">
 
-      <!-- ═══ LEFT — Branding Panel ═══ -->
+      <!-- ═══ LEFT — Branding ═══ -->
       <div class="login-left">
-        <!-- Dekor lingkaran -->
         <div class="decor-circle w-72 h-72 -top-20 -right-20"></div>
         <div class="decor-circle w-48 h-48 bottom-10 -left-16 opacity-60"></div>
         <div class="decor-circle w-24 h-24 top-1/2 right-10"></div>
 
         <!-- Logo -->
         <div class="relative z-10">
-          <a href="./index.html" class="flex items-center gap-3 group">
-            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 transition"
+          <a href="./index.html" class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
                  style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="white" opacity=".9"/>
@@ -39,16 +35,15 @@
             </div>
             <div>
               <p class="font-bold text-white text-sm leading-tight">TPQ Akhlaqul Qurro'</p>
-              <p class="text-xs leading-tight" style="color:rgba(255,255,255,0.6)">Dusun Kabungka, Buton</p>
+              <p class="text-xs leading-tight" style="color:rgba(255,255,255,0.6)">Dusun Kabungka, Winning, Buton, Sulawesi Tenggara</p>
             </div>
           </a>
         </div>
 
-        <!-- Main content -->
+        <!-- Content -->
         <div class="relative z-10 flex-1 flex flex-col justify-center py-12">
-          <!-- Ilustrasi bulan bintang -->
           <div class="mb-8 float">
-            <svg width="120" height="120" viewBox="0 0 140 140" fill="none">
+            <svg width="110" height="110" viewBox="0 0 140 140" fill="none">
               <circle cx="70" cy="70" r="65" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
               <path d="M88 42C74 42 63 53 63 67C63 81 74 92 88 92C80 92 70 86 70 67C70 48 80 42 88 42Z" fill="rgba(245,200,66,0.95)"/>
               <polygon points="105,28 107,34 113,34 108,38 110,44 105,40 100,44 102,38 97,34 103,34" fill="rgba(245,200,66,0.9)"/>
@@ -86,26 +81,25 @@
               </div>
               <p class="text-sm" style="color:rgba(255,255,255,0.8)">Nilai & catatan dari ustadz</p>
             </div>
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,0.12)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-              </div>
-              <p class="text-sm" style="color:rgba(255,255,255,0.8)">Akses untuk santri & orang tua</p>
-            </div>
+          </div>
+
+          <!-- Demo credentials hint -->
+          <div class="mt-8 p-4 rounded-xl" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15)">
+            <p class="text-xs font-bold text-yellow-300 mb-2">🔑 Akun Demo:</p>
+            <p class="text-xs" style="color:rgba(255,255,255,0.7)">Santri → NIS: <strong class="text-white">2024001</strong> / pass: <strong class="text-white">santri123</strong></p>
+            <p class="text-xs mt-1" style="color:rgba(255,255,255,0.7)">Orang Tua → Kode: <strong class="text-white">ORTU001</strong> / pass: <strong class="text-white">ortu123</strong></p>
           </div>
         </div>
 
-        <!-- Footer left -->
         <div class="relative z-10">
-          <p class="text-xs" style="color:rgba(255,255,255,0.4)">© 2026 TPQ Akhlaqul Qurro' · Dusun Kabungka, Buton</p>
+          <p class="text-xs" style="color:rgba(255,255,255,0.4)">© 2026 TPQ Akhlaqul Qurro' · Dusun Kabungka, Winning, Buton, Sulawesi Tenggara</p>
         </div>
       </div>
 
-      <!-- ═══ RIGHT — Login Form ═══ -->
+      <!-- ═══ RIGHT — Form ═══ -->
       <div class="flex items-center justify-center p-6 md:p-12 bg-gray-50">
         <div class="w-full max-w-md">
 
-          <!-- Header form -->
           <div class="mb-8 fade-up">
             <h2 class="text-2xl font-bold text-navy mb-1">Selamat Datang 👋</h2>
             <p class="text-gray-500 text-sm">Masuk ke akun Anda untuk melanjutkan</p>
@@ -137,7 +131,7 @@
 
             <form id="login-form" onsubmit="handleLogin(event)" novalidate>
 
-              <!-- Field ID -->
+              <!-- ID Field -->
               <div class="mb-4">
                 <label class="block text-sm font-semibold text-gray-700 mb-2" id="id-label">
                   NIS (Nomor Induk Santri)
@@ -153,10 +147,10 @@
                     </svg>
                   </span>
                 </div>
-                <p class="text-red-500 text-xs mt-1 hidden" id="id-error">Field ini wajib diisi</p>
+                <p class="text-red-500 text-xs mt-1 hidden" id="id-error"></p>
               </div>
 
-              <!-- Field Password -->
+              <!-- Password Field -->
               <div class="mb-6">
                 <div class="flex justify-between items-center mb-2">
                   <label class="block text-sm font-semibold text-gray-700">Password</label>
@@ -180,7 +174,7 @@
                     </svg>
                   </button>
                 </div>
-                <p class="text-red-500 text-xs mt-1 hidden" id="pw-error">Password wajib diisi</p>
+                <p class="text-red-500 text-xs mt-1 hidden" id="pw-error"></p>
               </div>
 
               <!-- Remember me -->
@@ -192,7 +186,7 @@
                 </label>
               </div>
 
-              <!-- Submit button -->
+              <!-- Submit -->
               <button type="submit" class="btn-login" id="btn-login">
                 <div class="spinner"></div>
                 <span class="btn-text flex items-center gap-2">
@@ -205,14 +199,12 @@
               </button>
             </form>
 
-            <!-- Divider -->
             <div class="flex items-center gap-3 my-6">
               <div class="flex-1 h-px bg-gray-200"></div>
               <span class="text-xs text-gray-400 font-medium">atau</span>
               <div class="flex-1 h-px bg-gray-200"></div>
             </div>
 
-            <!-- Bantuan WhatsApp -->
             <a href="https://wa.me/6281234567890?text=Assalamu'alaikum, saya butuh bantuan login Portal Santri TPQ Akhlaqul Qurro'"
                target="_blank"
                class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-gray-200 text-sm font-semibold text-gray-600 hover:border-green-500 hover:text-green-600 transition-all">
@@ -223,7 +215,6 @@
             </a>
           </div>
 
-          <!-- Back to home -->
           <div class="text-center mt-6">
             <a href="./index.html"
                class="text-sm text-gray-500 hover:text-navy transition flex items-center justify-center gap-1.5">
@@ -238,7 +229,12 @@
       </div>
     </div>
 
-    <!-- Page-specific JS -->
+    <!--
+      URUTAN SCRIPT WAJIB:
+      1. data/santri.js  → TPQ_ACCOUNTS (data akun)
+      2. js/santri.js    → handleLogin, switchRole, dll
+    -->
+    <script src="./assets/data/santri.js"></script>
     <script src="./assets/js/santri.js"></script>
   </body>
 </html>

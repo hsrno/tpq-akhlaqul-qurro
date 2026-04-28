@@ -1,24 +1,29 @@
 /* ════════════════════════════════════════
    TPQ AKHLAQUL QURRO' — pages.js
-   Logic untuk semua halaman statis
+   Logic SHARED untuk semua halaman statis
+
+   ATURAN:
+   - Hanya logic yang dipakai 2+ halaman
+   - Logic khusus 1 halaman → tulis inline
+     di <script> dalam file HTML itu sendiri
+   - Jangan duplikasi logic dari main.js
 
    SECTIONS:
-   1. SHARED     — navbar, mobile menu, counter, lang
-   2. JADWAL     — showJadwal(), rutinitas, materi
-   3. TENTANG    — (counter sudah di SHARED)
-   4. PROGRAM    — placeholder
-   5. GALLERY    — placeholder
-   6. TATATERTIB — placeholder
+   1. SHARED    — navbar shadow, mobile menu,
+                  mobile accordion, counter
+   2. JADWAL    — showJadwal(), render tabel
+   3. TATATERTIB— showKategori(), renderCatatan()
+   4. TENTANG   — render materi pengajar
    ════════════════════════════════════════ */
 
 (function () {
   "use strict";
 
   /* ════════════════════════════════════════
-     1. SHARED — jalan di semua halaman
+     1. SHARED
      ════════════════════════════════════════ */
 
-  /* ── Navbar scroll shadow ── */
+  /* ── Navbar shadow on scroll ── */
   function initNavbar() {
     var navbar = document.getElementById("navbar");
     if (!navbar) return;
@@ -42,22 +47,20 @@
     };
   }
 
-  /* ── Mobile accordion navbar (Tentang Kami) ── */
+  /* ── Mobile accordion (Tentang Kami) ── */
   function initMobileAccordion() {
     var btn = document.getElementById("acc-btn");
     var content = document.getElementById("acc-content");
     if (!btn || !content) return;
-
     btn.addEventListener("click", function () {
       btn.classList.toggle("open");
       content.classList.toggle("open");
     });
   }
 
-  /* ── Counter animasi — IntersectionObserver ──
-     Jalan otomatis di semua halaman yang punya .counter
-     (index, tentang, dll). Animasi mulai saat elemen
-     masuk viewport, tidak duplikat berkat data-counted.  ── */
+  /* ── Counter animasi (IntersectionObserver) ──
+     Jalan di semua halaman yang punya .counter
+     data-counted mencegah duplikasi           ── */
   function initCounters() {
     document.querySelectorAll(".counter").forEach(function (el) {
       if (el.dataset.counted) return;
@@ -87,59 +90,13 @@
     });
   }
 
-  /* ── Quick tabs di page-hero (scroll ke section) ── */
-  function initQuickTabs() {
-    document
-      .querySelectorAll(".quick-tab[data-target]")
-      .forEach(function (tab) {
-        tab.addEventListener("click", function () {
-          var target = document.getElementById(this.dataset.target);
-          if (target)
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          var group = this.dataset.group || "default";
-          document
-            .querySelectorAll('.quick-tab[data-group="' + group + '"]')
-            .forEach(function (t) {
-              t.classList.remove("active");
-            });
-          this.classList.add("active");
-        });
-      });
-  }
-
-  /* ── Language toggle ── */
-  window.setLang = function (lang) {
-    if (typeof translations !== "undefined") {
-      document.querySelectorAll("[data-i18n]").forEach(function (el) {
-        var key = el.getAttribute("data-i18n");
-        if (translations[lang] && translations[lang][key] !== undefined) {
-          el.innerHTML = translations[lang][key];
-        }
-      });
-    }
-
-    var map = {
-      "btn-id": "lang-btn " + (lang === "id" ? "active-id" : "inactive-id"),
-      "btn-en": "lang-btn " + (lang === "en" ? "active-en" : "inactive-en"),
-      "btn-id-m": "lang-btn " + (lang === "id" ? "active-id" : "inactive-id"),
-      "btn-en-m": "lang-btn " + (lang === "en" ? "active-en" : "inactive-en"),
-    };
-    Object.keys(map).forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.className = map[id];
-    });
-
-    localStorage.setItem("lang", lang);
-  };
-
   /* ════════════════════════════════════════
      2. JADWAL
-     Requires: assets/data/jadwal.js di-load
-     sebelum pages.js di jadwal.html
+     Requires: assets/data/jadwal.js
+     di-load SEBELUM pages.js
+     Halaman: pages/jadwal.html
      ════════════════════════════════════════ */
 
-  /* ── Data jam per kelas ── */
   var jamMap = {
     "A Seluruhnya": { label: "Kelas A", jam: "13:30 – 15:30" },
     "B Seluruhnya": { label: "Kelas B", jam: "16:45 – 17:45" },
@@ -150,34 +107,31 @@
 
   var hariList = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
-  /* ── showJadwal — dipanggil oleh onclick tab di HTML ── */
+  /* showJadwal dipanggil oleh onclick di HTML */
   window.showJadwal = function (kelas) {
-    /* Update kelas-tab aktif */
+    /* Update tab di hero */
     document.querySelectorAll(".kelas-tab").forEach(function (t) {
       t.classList.toggle("active", t.dataset.kelas === kelas);
     });
-
-    /* Update jam-card aktif */
+    /* Update jam-card */
     document.querySelectorAll(".jam-card").forEach(function (c) {
       c.classList.toggle("active", c.dataset.kelas === kelas);
     });
-
-    /* Update header info */
+    /* Update header */
     var info = jamMap[kelas] || {};
     var title = document.getElementById("jadwal-title");
     var jam = document.getElementById("jadwal-jam");
     if (title) title.textContent = "Jadwal " + (info.label || kelas);
     if (jam) jam.textContent = info.jam || "";
 
-    /* Render tabel jadwal */
+    /* Render tabel */
     var data = JADWAL_DATA.semesterGenap[kelas];
     var tbody = document.getElementById("jadwal-tbody");
     if (!tbody) return;
 
     if (!data) {
       tbody.innerHTML =
-        '<tr><td colspan="2" style="text-align:center;padding:32px;color:#9ca3af">' +
-        "Data tidak tersedia</td></tr>";
+        '<tr><td colspan="2" style="text-align:center;padding:32px;color:#9ca3af">Data tidak tersedia</td></tr>';
       return;
     }
 
@@ -185,42 +139,28 @@
       .map(function (hari) {
         var materi = data[hari];
         if (!materi || materi.length === 0) return "";
-
         var items = materi
           .map(function (m) {
             return (
-              '<div class="materi-item">' +
-              '<span class="materi-dot"></span>' +
-              "<span>" +
+              '<div class="materi-item"><span class="materi-dot"></span><span>' +
               m +
-              "</span>" +
-              "</div>"
+              "</span></div>"
             );
           })
           .join("");
-
         return (
-          "<tr>" +
-          '<td class="td-hari">' +
+          '<tr><td class="td-hari">' +
           hari +
-          "</td>" +
-          '<td><div class="materi-list">' +
+          '</td><td><div class="materi-list">' +
           items +
-          "</div></td>" +
-          "</tr>"
+          "</div></td></tr>"
         );
       })
       .join("");
   };
 
-  /* ── Init jadwal — render rutinitas + materi + jadwal awal ── */
   function initJadwal() {
-    if (typeof JADWAL_DATA === "undefined") {
-      console.error(
-        "JADWAL_DATA tidak ditemukan! Pastikan jadwal.js di-load sebelum pages.js",
-      );
-      return;
-    }
+    if (typeof JADWAL_DATA === "undefined") return;
 
     /* Rutinitas penutup */
     var rBody = document.getElementById("rutinitas-tbody");
@@ -228,14 +168,11 @@
       rBody.innerHTML = JADWAL_DATA.rutinitas
         .map(function (r) {
           return (
-            "<tr>" +
-            '<td class="td-hari">' +
+            '<tr><td class="td-hari">' +
             r.hari +
-            "</td>" +
-            '<td class="td-kegiatan">' +
+            '</td><td class="td-kegiatan">' +
             r.kegiatan +
-            "</td>" +
-            "</tr>"
+            "</td></tr>"
           );
         })
         .join("");
@@ -263,40 +200,156 @@
         .join("");
     }
 
-    /* Tampilkan kelas pertama secara default */
+    /* Default kelas pertama */
     window.showJadwal("A Seluruhnya");
   }
 
   /* ════════════════════════════════════════
-     3. TENTANG
-     Counter → sudah ditangani initCounters()
-     FAQ     → sudah native <details>, tidak
-               perlu JS tambahan
+     3. TATATERTIB
+     Requires: assets/data/tatatertib.js
+     di-load SEBELUM pages.js
+     Halaman: pages/tatatertib.html
      ════════════════════════════════════════ */
 
-  /* ════════════════════════════════════════
-     4. PROGRAM — placeholder
-     ════════════════════════════════════════ */
-  function initProgram() {
-    // TODO: tab filter program (Iqra, Quran, Akhlak)
+  var katMeta = {
+    kedisiplinan: {
+      title: "⏰ Kedisiplinan",
+      desc: "Pelanggaran terkait kehadiran dan ketepatan waktu",
+    },
+    pakaian: {
+      title: "👗 Pakaian & Penampilan",
+      desc: "Pelanggaran terkait aturan berpakaian Islami",
+    },
+    perilaku: {
+      title: "🤝 Perilaku & Etika",
+      desc: "Pelanggaran terkait akhlak dan etika pergaulan",
+    },
+    pembelajaran: {
+      title: "📚 Pembelajaran",
+      desc: "Pelanggaran terkait proses belajar mengajar",
+    },
+    etikaMedsos: {
+      title: "📱 Medsos & Digital",
+      desc: "Pelanggaran terkait penggunaan media sosial dan gadget",
+    },
+    barangTerlarang: {
+      title: "🚫 Barang Terlarang",
+      desc: "Pelanggaran terkait barang yang tidak boleh dibawa",
+    },
+  };
+
+  function poinClass(p) {
+    if (p >= 70) return "poin-max";
+    if (p >= 20) return "poin-high";
+    if (p >= 10) return "poin-mid";
+    return "poin-low";
   }
 
-  /* ════════════════════════════════════════
-     5. GALLERY — placeholder
-     ════════════════════════════════════════ */
-  function initGallery() {
-    // TODO: filter kategori & lightbox
-  }
+  /* showKategori dipanggil oleh onclick di HTML */
+  window.showKategori = function (cat) {
+    document.querySelectorAll(".cat-tab").forEach(function (t) {
+      t.classList.toggle("active", t.dataset.cat === cat);
+    });
 
-  /* ════════════════════════════════════════
-     6. TATATERTIB — placeholder
-     ════════════════════════════════════════ */
+    var meta = katMeta[cat] || {};
+    var catTitle = document.getElementById("cat-title");
+    var catDesc = document.getElementById("cat-desc");
+    var catCount = document.getElementById("cat-count");
+    if (catTitle) catTitle.textContent = meta.title || cat;
+    if (catDesc) catDesc.textContent = meta.desc || "";
+
+    var data = TATATERTIB_DATA[cat];
+    var tbody = document.getElementById("tt-tbody");
+    if (!tbody) return;
+
+    if (!data || data.length === 0) {
+      tbody.innerHTML =
+        '<tr><td colspan="3" style="text-align:center;padding:32px;color:#9ca3af">Data tidak tersedia</td></tr>';
+      if (catCount) catCount.textContent = "0 pelanggaran";
+      return;
+    }
+
+    if (catCount) catCount.textContent = data.length + " pelanggaran";
+
+    tbody.innerHTML = data
+      .map(function (item) {
+        return (
+          "<tr>" +
+          '<td class="td-no">' +
+          item.no +
+          "</td>" +
+          '<td class="td-pel">' +
+          item.pelanggaran +
+          "</td>" +
+          '<td class="td-poin" style="text-align:center">' +
+          '<span class="poin-badge ' +
+          poinClass(item.poin) +
+          '">' +
+          item.poin +
+          " poin</span>" +
+          "</td>" +
+          "</tr>"
+        );
+      })
+      .join("");
+  };
+
   function initTatatertib() {
-    // TODO: jika ada interaksi
+    if (typeof TATATERTIB_DATA === "undefined") return;
+
+    /* Render catatan penting */
+    var el = document.getElementById("catatan-list");
+    if (el && TATATERTIB_DATA.catatan) {
+      el.innerHTML = TATATERTIB_DATA.catatan
+        .map(function (c) {
+          return (
+            '<div class="catatan-item"><span class="catatan-dot">•</span><span>' +
+            c +
+            "</span></div>"
+          );
+        })
+        .join("");
+    }
+
+    /* Default kategori pertama */
+    window.showKategori("kedisiplinan");
   }
 
   /* ════════════════════════════════════════
-     INIT — satu DOMContentLoaded
+     4. TENTANG
+     Requires: assets/data/jadwal.js
+     Halaman: pages/tentang.html
+     ════════════════════════════════════════ */
+
+  function initTentang() {
+    if (typeof JADWAL_DATA === "undefined") return;
+
+    /* Render tabel materi pengajar */
+    var tbody = document.getElementById("materi-tbody");
+    if (tbody && JADWAL_DATA.materi) {
+      tbody.innerHTML = JADWAL_DATA.materi
+        .map(function (item) {
+          return (
+            "<tr>" +
+            '<td class="td-no">' +
+            item.no +
+            "</td>" +
+            '<td class="td-mapel">' +
+            item.mapel +
+            "</td>" +
+            '<td class="td-pengajar">' +
+            item.pengajar +
+            "</td>" +
+            "</tr>"
+          );
+        })
+        .join("");
+    }
+  }
+
+  /* ════════════════════════════════════════
+     INIT — deteksi halaman lalu jalankan
+     logic yang sesuai
      ════════════════════════════════════════ */
   document.addEventListener("DOMContentLoaded", function () {
     /* Shared — jalan di semua halaman */
@@ -304,19 +357,16 @@
     initMobileMenu();
     initMobileAccordion();
     initCounters();
-    initQuickTabs();
 
-    /* Restore bahasa */
-    var savedLang = localStorage.getItem("lang") || "id";
-    window.setLang(savedLang);
-
-    /* Per halaman — deteksi dari URL */
+    /* Deteksi halaman dari URL */
     var path = window.location.pathname;
+
     if (path.includes("jadwal")) initJadwal();
-    if (path.includes("program")) initProgram();
-    if (path.includes("gallery")) initGallery();
     if (path.includes("tatatertib")) initTatatertib();
-    /* tentang.html tidak perlu blok khusus —
-       counter & FAQ sudah ditangani di atas  */
+    if (path.includes("tentang")) initTentang();
+
+    /* Restore lang dari localStorage */
+    var savedLang = localStorage.getItem("lang") || "id";
+    if (typeof setLang === "function") setLang(savedLang);
   });
 })();

@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Program — TPQ Akhlaqul Qurro'</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/main-output.css" />
+
+  </head>
+  <body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <header id="navbar" class="navbar">
+      <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <a href="../index.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-grad-main">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="white" opacity=".9"/>
+              <polygon points="16,3 16.5,4.5 18,4.5 16.9,5.4 17.3,6.9 16,6 14.7,6.9 15.1,5.4 14,4.5 15.5,4.5" fill="#F5C842"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold text-navy text-sm leading-tight">TPQ Akhlaqul Qurro'</p>
+            <p class="text-xs text-gray-400 leading-tight">Dusun Kabungka, Buton</p>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8">
+          <ul class="flex gap-7 list-none items-center">
+            <li><a href="../index.html" class="nav-link">Beranda</a></li>
+            <li class="dropdown-wrap">
+              <button class="nav-link dropdown-trigger flex items-center gap-1">
+                <span>Tentang Kami</span>
+                <svg width="10" height="7" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+              <div class="dropdown-menu">
+                <a href="./tentang.html#profil" class="dropdown-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="var(--navy)" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"/></svg>
+                  Profil TPQ
+                </a>
+                <a href="./tentang.html#visi" class="dropdown-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="var(--navy)" stroke-width="2"/><path d="M8 12h8M8 8h5" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"/></svg>
+                  Visi & Misi
+                </a>
+                <a href="./tentang.html#faq" class="dropdown-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="var(--navy)" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"/></svg>
+                  FAQ
+                </a>
+                <a href="./tatatertib.html" class="dropdown-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"/></svg>
+                  Tata Tertib
+                </a>
+              </div>
+            </li>
+            <li><a href="./jadwal.html" class="nav-link">Jadwal</a></li>
+            <li><a href="./gallery.html" class="nav-link">Galeri</a></li>
+            <li><a href="../index.html#contact" class="nav-link">Kontak</a></li>
+          </ul>
+          <div class="flex items-center gap-1.5">
+            <button id="btn-id" class="lang-btn active-id" onclick="setLang('id')">ID</button>
+            <button id="btn-en" class="lang-btn inactive-en" onclick="setLang('en')">EN</button>
+          </div>
+          <a href="../santri.html" class="btn-portal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            Portal Santri
+          </a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect y="4" width="24" height="2" rx="1" fill="var(--navy)"/>
+            <rect y="11" width="24" height="2" rx="1" fill="var(--navy)"/>
+            <rect y="18" width="24" height="2" rx="1" fill="var(--navy)"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-soft">
+        <ul class="flex flex-col px-6 py-4 gap-1 list-none">
+          <li><a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-navy" onclick="closeMobile()">Beranda</a></li>
+          <li>
+            <button class="mobile-acc-trigger py-2.5 text-sm font-medium text-gray-700 hover:text-navy w-full" id="acc-btn">
+              <span>Tentang Kami</span>
+              <svg class="acc-chevron w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="mobile-accordion" id="acc-content">
+              <div class="pl-4 pb-2 flex flex-col gap-1">
+                <a href="./tentang.html#profil" class="py-2 text-sm text-gray-600 hover:text-navy" onclick="closeMobile()">Profil TPQ</a>
+                <a href="./tentang.html#visi" class="py-2 text-sm text-gray-600 hover:text-navy" onclick="closeMobile()">Visi & Misi</a>
+                <a href="./tentang.html#faq" class="py-2 text-sm text-gray-600 hover:text-navy" onclick="closeMobile()">FAQ</a>
+                <a href="./tatatertib.html" class="py-2 text-sm text-gray-600 hover:text-navy" onclick="closeMobile()">Tata Tertib</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="./jadwal.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-navy" onclick="closeMobile()">Jadwal</a></li>
+          <li><a href="./gallery.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-navy" onclick="closeMobile()">Galeri</a></li>
+          <li><a href="../index.html#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-navy" onclick="closeMobile()">Kontak</a></li>
+          <li class="pt-3 border-t mt-1 border-soft">
+            <a href="../santri.html" class="btn-portal w-full justify-center" onclick="closeMobile()">Portal Santri</a>
+          </li>
+          <li class="flex gap-2 pt-3">
+            <button id="btn-id-m" class="lang-btn active-id" onclick="setLang('id')">ID</button>
+            <button id="btn-en-m" class="lang-btn inactive-en" onclick="setLang('en')">EN</button>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="h-[57px]"></div>
+
+    <!-- ═══ HERO ═══ -->
+    <div class="page-hero prog-hero">
+      <div class="hero-inner">
+        <div class="breadcrumb">
+          <a href="../index.html">Beranda</a>
+          <span class="sep">/</span>
+          <span style="color:rgba(255,255,255,0.85)">Program</span>
+        </div>
+        <h1>Program <span style="color:#FDE68A">Unggulan</span></h1>
+        <p class="sub">Lebih dari sekadar mengaji — TPQ Akhlaqul Qurro' hadir dengan program nyata yang membentuk karakter, kepedulian, dan cinta Al-Qur'an sejak dini.</p>
+        <div class="quick-tabs">
+          <a href="#kelas-belajar" class="quick-tab">📚 Kelas Belajar</a>
+          <a href="#aqku-berbagi"  class="quick-tab">🤝 AQKU Berbagi</a>
+          <a href="#ngaji-ramadhan" class="quick-tab">🌙 Ngaji Ramadhan</a>
+          <a href="#berbagi-ramadhan" class="quick-tab">🎁 Berbagi Ramadhan</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONTENT ═══ -->
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+      <!-- ══ RINGKASAN PROGRAM ══ -->
+      <div class="prog-stat-grid mb-10">
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="background:linear-gradient(135deg,#0A1A40,#1b3a6b)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="prog-stat-num">10</div>
+          <div class="prog-stat-lbl">Kelas Aktif</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="background:linear-gradient(135deg,#1A7A4A,#22a35e)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="white" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="prog-stat-num">100+</div>
+          <div class="prog-stat-lbl">Santri Aktif</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="prog-stat-num">3+</div>
+          <div class="prog-stat-lbl">Tahun Program Sosial</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="background:linear-gradient(135deg,#b45309,#d97706)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="prog-stat-num">4</div>
+          <div class="prog-stat-lbl">Program Unggulan</div>
+        </div>
+      </div>
+
+      <!-- ══ KELAS BELAJAR ══ -->
+      <section id="kelas-belajar" class="scroll-mt-20 mb-12">
+        <div class="prog-section-header">
+          <span class="badge" style="background:#EEF2FF;color:var(--navy)">Program Rutin</span>
+          <h2>📚 Kelas <span class="text-gold">Belajar</span></h2>
+          <p>Kurikulum terstruktur dari Iqra hingga Tahfidz Al-Qur'an, disesuaikan dengan tingkat kemampuan santri</p>
+        </div>
+
+        <!-- Level program -->
+        <div class="prog-level-grid">
+
+          <!-- Kelas A (Iqra) -->
+          <div class="prog-level-card level-iqra">
+            <div class="prog-level-top">
+              <div class="prog-level-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <h3>Kelas A — Iqra</h3>
+                <span class="prog-level-badge">Tingkat SD</span>
+              </div>
+            </div>
+            <p class="prog-level-desc">Belajar membaca huruf hijaiyah dari dasar menggunakan metode Iqra. Terdiri dari 5 sub-kelas (A.1–A.5) sesuai kemampuan membaca.</p>
+            <div class="prog-level-meta">
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>13:30 – 15:30</span>
+              </div>
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                <span>5 Kelas · 36 Santri</span>
+              </div>
+            </div>
+            <div class="prog-kelas-chips">
+              <span class="prog-chip">A.1</span>
+              <span class="prog-chip">A.2</span>
+              <span class="prog-chip">A.3</span>
+              <span class="prog-chip">A.4</span>
+              <span class="prog-chip">A.5</span>
+            </div>
+          </div>
+
+          <!-- Kelas B -->
+          <div class="prog-level-card level-quran">
+            <div class="prog-level-top">
+              <div class="prog-level-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Kelas B — Al-Qur'an</h3>
+                <span class="prog-level-badge">Lanjutan</span>
+              </div>
+            </div>
+            <p class="prog-level-desc">Membaca Al-Qur'an dengan tartil dan tajwid yang benar. Terdiri dari 2 sub-kelas (B.1–B.2) untuk santri yang telah lulus Iqra.</p>
+            <div class="prog-level-meta">
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>16:45 – 17:45</span>
+              </div>
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                <span>2 Kelas · 20 Santri</span>
+              </div>
+            </div>
+            <div class="prog-kelas-chips">
+              <span class="prog-chip">B.1</span>
+              <span class="prog-chip">B.2</span>
+            </div>
+          </div>
+
+          <!-- Kelas Qur'an 1 & 2 -->
+          <div class="prog-level-card level-tartil">
+            <div class="prog-level-top">
+              <div class="prog-level-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Qur'an 1 & 2</h3>
+                <span class="prog-level-badge">Tartil</span>
+              </div>
+            </div>
+            <p class="prog-level-desc">Fokus pada kelancaran membaca Al-Qur'an dengan tajwid sempurna. Santri wajib setor hafalan setiap hari sebagai rutinitas utama.</p>
+            <div class="prog-level-meta">
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>15:40 – 16:40</span>
+              </div>
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                <span>2 Kelas · 18 Santri</span>
+              </div>
+            </div>
+            <div class="prog-kelas-chips">
+              <span class="prog-chip">Qur'an 1</span>
+              <span class="prog-chip">Qur'an 2</span>
+            </div>
+          </div>
+
+          <!-- Tahfidz -->
+          <div class="prog-level-card level-tahfidz">
+            <div class="prog-level-top">
+              <div class="prog-level-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Tahfidz 1 & 2</h3>
+                <span class="prog-level-badge">Hafalan</span>
+              </div>
+            </div>
+            <p class="prog-level-desc">Program menghafal Al-Qur'an secara intensif. Sesi sore hingga malam hari dengan target hafalan terstruktur per semester.</p>
+            <div class="prog-level-meta">
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>17:50 – 20:00</span>
+              </div>
+              <div class="prog-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                <span>1 Kelas · 13 Santri</span>
+              </div>
+            </div>
+            <div class="prog-kelas-chips">
+              <span class="prog-chip">Tahfidz 1</span>
+              <span class="prog-chip">Tahfidz 2</span>
+            </div>
+          </div>
+
+        </div>
+
+        <a href="./jadwal.html" class="prog-link-jadwal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+          Lihat Jadwal Lengkap Per Kelas
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </section>
+
+      <!-- ══ PROGRAM SOSIAL — INTRO ══ -->
+      <div class="prog-sosial-intro mb-8">
+        <div class="prog-sosial-intro-inner">
+          <span class="badge" style="background:rgba(255,255,255,0.15);color:white">Program Sosial</span>
+          <h2>Membentuk Generasi <span style="color:#FDE68A">Qurani & Peduli</span></h2>
+          <p>Di luar kegiatan belajar mengajar, TPQ Akhlaqul Qurro' menjalankan program sosial nyata yang mengajarkan santri arti berbagi dan kepedulian terhadap sesama — bahkan hingga skala global.</p>
+        </div>
+      </div>
+
+      <!-- ══ AQKU BERBAGI ══ -->
+      <section id="aqku-berbagi" class="scroll-mt-20 mb-10">
+        <div class="prog-feature-card aqku-card">
+          <div class="prog-feature-body">
+            <div class="prog-feature-label">
+              <span class="prog-sosial-badge aqku-badge">🤝 Program Sosial</span>
+              <span class="prog-tahun-badge">Berjalan 3+ Tahun</span>
+            </div>
+            <h2 class="prog-feature-title">AQKU Berbagi</h2>
+            <p class="prog-feature-desc">
+              Program berbagi yang diinisiasi oleh santri TPQ Akhlaqul Qurro' sebagai wujud nyata kepedulian terhadap sesama. Santri belajar bahwa memberi adalah bagian dari ibadah dan tanggung jawab sosial seorang Muslim.
+            </p>
+
+            <div class="prog-highlight-list">
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot aqku-dot"></div>
+                <div>
+                  <strong>Bantuan Lokal</strong>
+                  <p>Membantu saudara sesama yang membutuhkan di lingkungan sekitar — mulai dari kebutuhan pokok hingga dukungan moril.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot aqku-dot"></div>
+                <div>
+                  <strong>Skala Global — Palestina</strong>
+                  <p>Santri TPQ Akhlaqul Qurro' telah berhasil mengumpulkan dan mengirimkan bantuan untuk saudara Muslim di Palestina — bukti nyata empati tanpa batas geografis.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot aqku-dot"></div>
+                <div>
+                  <strong>Bersertifikat Resmi</strong>
+                  <p>Setiap kegiatan AQKU Berbagi terdokumentasi dengan sertifikat resmi sebagai bukti kontribusi nyata santri kepada dunia.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prog-feature-visual aqku-visual">
+            <div class="prog-visual-icon">🤝</div>
+            <div class="prog-visual-stat">
+              <div class="prog-vs-num">3+</div>
+              <div class="prog-vs-lbl">Tahun Berjalan</div>
+            </div>
+            <div class="prog-visual-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Telah menjangkau Palestina
+            </div>
+            <div class="prog-visual-tag" style="margin-top:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/><line x1="9" y1="15" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Bersertifikat Resmi
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ NGAJI BARENG RAMADHAN ══ -->
+      <section id="ngaji-ramadhan" class="scroll-mt-20 mb-10">
+        <div class="prog-feature-card ramadhan-card prog-feature-card-reverse">
+          <div class="prog-feature-visual ramadhan-visual">
+            <div class="prog-visual-icon">🌙</div>
+            <div class="prog-visual-stat">
+              <div class="prog-vs-num">Semua</div>
+              <div class="prog-vs-lbl">Usia Disambut</div>
+            </div>
+            <div class="prog-visual-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Terbuka untuk umum
+            </div>
+            <div class="prog-visual-tag" style="margin-top:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg>
+              Dusun Kabungka, Buton
+            </div>
+          </div>
+
+          <div class="prog-feature-body">
+            <div class="prog-feature-label">
+              <span class="prog-sosial-badge ramadhan-badge">🌙 Program Ramadhan</span>
+              <span class="prog-tahun-badge">Tahunan</span>
+            </div>
+            <h2 class="prog-feature-title">Ngaji Bareng Ramadhan</h2>
+            <p class="prog-feature-desc">
+              Sebuah program spesial di bulan Ramadhan yang mengajak seluruh masyarakat — tanpa batasan usia — untuk belajar mengaji bersama. Dari anak-anak hingga orang dewasa, semua bisa belajar Al-Qur'an di bulan yang penuh berkah ini.
+            </p>
+
+            <div class="prog-highlight-list">
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot ramadhan-dot"></div>
+                <div>
+                  <strong>Terbuka untuk Semua Usia</strong>
+                  <p>Tidak ada syarat usia. Anak-anak, remaja, dewasa, hingga lansia — semua disambut untuk belajar mengaji bersama.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot ramadhan-dot"></div>
+                <div>
+                  <strong>Momentum Ramadhan</strong>
+                  <p>Memanfaatkan semangat ibadah di bulan Ramadhan sebagai momentum terbaik untuk mulai atau meningkatkan kemampuan membaca Al-Qur'an.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot ramadhan-dot"></div>
+                <div>
+                  <strong>Mempererat Ukhuwah</strong>
+                  <p>Santri TPQ menjadi bagian dari penggerak kegiatan, sekaligus belajar berbagi ilmu kepada masyarakat sekitar.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ BERBAGI AKHIR RAMADHAN ══ -->
+      <section id="berbagi-ramadhan" class="scroll-mt-20 mb-10">
+        <div class="prog-feature-card zakat-card">
+          <div class="prog-feature-body">
+            <div class="prog-feature-label">
+              <span class="prog-sosial-badge zakat-badge">🎁 Program Sosial</span>
+              <span class="prog-tahun-badge">Setiap Ramadhan</span>
+            </div>
+            <h2 class="prog-feature-title">Berbagi di Akhir Ramadhan</h2>
+            <p class="prog-feature-desc">
+              Menjelang Idul Fitri, TPQ Akhlaqul Qurro' menggelar program berbagi sembako kepada masyarakat yang membutuhkan. Dana bersumber dari para muhsinin yang mempercayakan amalan mereka melalui TPQ — konsepnya seperti zakat dan infaq yang disalurkan langsung.
+            </p>
+
+            <div class="prog-highlight-list">
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot zakat-dot"></div>
+                <div>
+                  <strong>Berbagi Sembako</strong>
+                  <p>Paket sembako berisi kebutuhan pokok disalurkan kepada masyarakat yang membutuhkan menjelang Hari Raya Idul Fitri.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot zakat-dot"></div>
+                <div>
+                  <strong>Dari Muhsinin</strong>
+                  <p>Donasi berasal dari para dermawan (muhsinin) yang mempercayakan amanah mereka kepada TPQ untuk disalurkan secara tepat sasaran.</p>
+                </div>
+              </div>
+              <div class="prog-highlight-item">
+                <div class="prog-highlight-dot zakat-dot"></div>
+                <div>
+                  <strong>Santri Ikut Terlibat</strong>
+                  <p>Santri dilibatkan langsung dalam proses persiapan hingga penyaluran — menanamkan nilai kepedulian dan tanggung jawab sosial sejak dini.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prog-feature-visual zakat-visual">
+            <div class="prog-visual-icon">🎁</div>
+            <div class="prog-visual-stat">
+              <div class="prog-vs-num">Rutin</div>
+              <div class="prog-vs-lbl">Setiap Tahun</div>
+            </div>
+            <div class="prog-visual-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2"/></svg>
+              Berbasis amanah muhsinin
+            </div>
+            <div class="prog-visual-tag" style="margin-top:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20,12 20,22 4,22 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="2" y="7" width="20" height="5" stroke="currentColor" stroke-width="2"/><line x1="12" y1="22" x2="12" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Tepat sasaran & transparan
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ CTA ══ -->
+      <div class="cta-box mt-6">
+        <h4>Ingin Bergabung atau Berkontribusi?</h4>
+        <p>Daftarkan putra-putri Anda atau salurkan donasi Anda melalui TPQ Akhlaqul Qurro'</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="../santri.html" class="cta-wa" style="background:white;color:var(--navy)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            Daftar Santri
+          </a>
+          <a href="https://wa.me/6281234567890" target="_blank" class="cta-wa">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Hubungi via WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="bg-gray-900 text-gray-300 py-8">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center bg-grad-main">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="white"/></svg>
+          </div>
+          <p class="font-bold text-white text-sm">TPQ Akhlaqul Qurro'</p>
+        </div>
+        <p class="text-xs text-gray-500">© 2026 TPQ Akhlaqul Qurro' · Dusun Kabungka, Buton</p>
+        <a href="../index.html" class="text-xs text-gray-400 hover:text-yellow-400 transition flex items-center gap-1">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Kembali ke Beranda
+        </a>
+      </div>
+    </footer>
+
+    <a href="https://wa.me/6281234567890" target="_blank" class="wa-btn">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Hubungi Kami
+    </a>
+
+    <!-- Scripts -->
+    <script src="../assets/data/santri.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/pages.js"></script>
+  </body>
+</html>
