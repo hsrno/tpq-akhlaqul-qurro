@@ -500,8 +500,9 @@ img, svg, video { display: block; max-width: 100%; height: auto; }
   background: var(--grad-main);
   border-radius: 20px;
   padding: 32px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
+  isolation: isolate;
 }
 .cta-banner::before {
   content: '';
