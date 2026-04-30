@@ -39,12 +39,29 @@
     if (!menuBtn || !mobileMenu) return;
 
     menuBtn.addEventListener("click", function () {
-      mobileMenu.classList.toggle("hidden");
+      mobileMenu.classList.toggle("open");
+      menuBtn.classList.toggle("menu-open");
     });
 
     window.closeMobile = function () {
-      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("open");
+      menuBtn.classList.remove("menu-open");
     };
+
+    /* ── Auto-detect active page ── */ // ← TAMBAH DI SINI
+    var path = window.location.pathname;
+    document.querySelectorAll("#mobile-menu a").forEach(function (link) {
+      var href = link.getAttribute("href");
+      if (!href) return;
+      var isActive = false;
+      if (href.includes("index")) {
+        isActive = path === "/" || path.endsWith("index.html");
+      } else {
+        var pageName = href.replace(/.*\//, "").replace(".html", "");
+        isActive = path.includes(pageName) && pageName !== "";
+      }
+      if (isActive) link.classList.add("mobile-active");
+    });
   }
 
   /* ── Mobile accordion (Tentang Kami) ── */
@@ -314,59 +331,18 @@
     /* Default kategori pertama */
     window.showKategori("kedisiplinan");
   }
-
-  /* ════════════════════════════════════════
-     4. TENTANG
-     Requires: assets/data/jadwal.js
-     Halaman: pages/tentang.html
-     ════════════════════════════════════════ */
-
-  function initTentang() {
-    if (typeof JADWAL_DATA === "undefined") return;
-
-    /* Render tabel materi pengajar */
-    var tbody = document.getElementById("materi-tbody");
-    if (tbody && JADWAL_DATA.materi) {
-      tbody.innerHTML = JADWAL_DATA.materi
-        .map(function (item) {
-          return (
-            "<tr>" +
-            '<td class="td-no">' +
-            item.no +
-            "</td>" +
-            '<td class="td-mapel">' +
-            item.mapel +
-            "</td>" +
-            '<td class="td-pengajar">' +
-            item.pengajar +
-            "</td>" +
-            "</tr>"
-          );
-        })
-        .join("");
-    }
-  }
-
-  /* ════════════════════════════════════════
-     INIT — deteksi halaman lalu jalankan
-     logic yang sesuai
+/* ════════════════════════════════════════
+     INIT
      ════════════════════════════════════════ */
   document.addEventListener("DOMContentLoaded", function () {
-    /* Shared — jalan di semua halaman */
     initNavbar();
     initMobileMenu();
     initMobileAccordion();
     initCounters();
 
-    /* Deteksi halaman dari URL */
     var path = window.location.pathname;
-
-    if (path.includes("jadwal")) initJadwal();
+    if (path.includes("jadwal"))     initJadwal();
     if (path.includes("tatatertib")) initTatatertib();
-    if (path.includes("tentang")) initTentang();
-
-    /* Restore lang dari localStorage */
-    var savedLang = localStorage.getItem("lang") || "id";
-    if (typeof setLang === "function") setLang(savedLang);
+    if (path.includes("tentang"))    initTentang();
   });
 })();

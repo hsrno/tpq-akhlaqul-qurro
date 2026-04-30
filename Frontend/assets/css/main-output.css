@@ -4405,10 +4405,6 @@ video {
   flex-shrink: 0;
 }
 
-.grow {
-  flex-grow: 1;
-}
-
 .scale-90 {
   --tw-scale-x: .9;
   --tw-scale-y: .9;
@@ -5046,6 +5042,11 @@ img, svg, video {
   transition: box-shadow .25s;
 }
 
+#mobile-menu {
+  position: relative;
+  z-index: 99;
+}
+
 .navbar.scrolled {
   box-shadow: 0 4px 20px rgba(10,26,64,.10);
 }
@@ -5154,6 +5155,100 @@ img, svg, video {
   max-height: 300px;
 }
 
+/* ── Mobile Menu Smooth Animation ── */
+
+#mobile-menu {
+  display: block !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+  opacity: 0;
+}
+
+#mobile-menu.open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* ── Hamburger Icon Animation ── */
+
+#menu-btn svg rect {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Saat menu open: 3 garis jadi X */
+
+#menu-btn.menu-open svg rect:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+#menu-btn.menu-open svg rect:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+#menu-btn.menu-open svg rect:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ════════════════════════════════════════
+   MOBILE MENU — REFINED INTERACTION
+   ════════════════════════════════════════ */
+
+/* Base link mobile */
+
+#mobile-menu a:not(.btn-portal-pro),
+#mobile-menu button.mobile-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  width: 100%;
+}
+
+#mobile-menu a:not(.btn-portal-pro):hover,
+#mobile-menu button.mobile-acc-trigger:hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+  padding-left: 16px;
+}
+
+#mobile-menu a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  padding-left: 16px;
+  border-left: 3px solid var(--navy);
+}
+
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro) {
+  font-size: 0.85rem;
+  padding: 8px 12px 8px 20px;
+  color: #6b7280;
+}
+
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro):hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+#mobile-menu .mobile-accordion a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  border-left: 3px solid var(--navy-light);
+}
+
 /* ════════════════════════════════════════
    6. LANGUAGE TOGGLE BUTTONS
    ════════════════════════════════════════ */
@@ -5211,26 +5306,30 @@ img, svg, video {
 
 /* Portal Santri button (green gradient) */
 
+/* SESUDAH */
+
 .btn-portal-pro {
   background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
-  padding: 10px 24px;
-  border-radius: 12px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  /* ← pill shape, lebih modern */
   font-weight: 700;
-  display: flex;
+  font-size: 0.85rem;
+  /* ← lebih kecil di mobile */
+  display: inline-flex;
+  /* ← tidak full-width */
   align-items: center;
-  gap: 10px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* Efek bayangan biar tombolnya 'angkat' */
+  gap: 8px;
+  white-space: nowrap;
+  /* ← tidak wrap */
   box-shadow: 0 4px 15px rgba(21, 128, 61, 0.25);
+  transition: all 0.3s ease;
 }
 
 .btn-portal-pro:hover {
   transform: translateY(-2px);
-  /* Efek glow saat di-hover ala PDDIKTI */
   box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
-  filter: brightness(1.1);
 }
 
 .btn-portal-pro:active {
@@ -5550,7 +5649,7 @@ img, svg, video {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 99;
+  z-index: 40;
   display: inline-flex;
   align-items: center;
   gap: 8px;
