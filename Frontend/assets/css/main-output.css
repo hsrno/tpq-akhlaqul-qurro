@@ -12,7 +12,7 @@
    7.  STATISTIK   — stat-grid, stat-item
    8.  TESTIMONI   — testi-card
    9.  FAQ         — faq-item halaman
-   10. LOGIN       — santri.html (split layout)
+   10. LOGIN       — login.html (split layout)
    ════════════════════════════════════════ */
 
 /* ════════════════════════════════════════
@@ -445,6 +445,73 @@
    3. TENTANG
    ════════════════════════════════════════ */
 
+.kelas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 0;
+}
+
+.kelas-item {
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle top accent line */
+
+.kelas-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1b3a6b, #1a7a4a);
+}
+
+.kelas-item:hover {
+  border-color: #1b3a6b;
+  box-shadow: 0 4px 12px rgba(27, 58, 107, 0.08);
+  transform: translateY(-2px);
+}
+
+.kelas-nm {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b3a6b;
+  margin-bottom: 6px;
+}
+
+.kelas-sub {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.kelas-jam {
+  font-size: 0.8rem;
+  color: #1a7a4a;
+  font-weight: 600;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .kelas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+}
+
 .visi-banner {
   background: var(--grad-main);
   border-radius: 16px;
@@ -581,12 +648,6 @@
 
 /* ════════════════════════════════════════
    4. PROGRAM
-   ════════════════════════════════════════ */
-
-/* ════════════════════════════════════════
-   4. PROGRAM — pages.css
-   CSS untuk pages/program.html
-   Tambahkan ke section 4 PROGRAM di pages.css
    ════════════════════════════════════════ */
 
 /* ── Hero khusus program ─────────────────────────────── */
@@ -1204,120 +1265,201 @@
   background: linear-gradient(135deg, #991b1b 0%, #1b3a6b 100%);
 }
 
-/* ── Warning grid & cards ──────────────────────────────
-   Fix: teks tidak wrapping aneh, ukuran proporsional    */
+/* ══════/* ═══════════════════════════════════════════════════
+   WARNING GRID — OPTIMIZED
+   ═══════════════════════════════════════════════════ */
 
 .warning-grid {
   display: grid;
   width: 100%;
-  margin: 24px 0;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  place-items: center;
-}
-
-@media (min-width: 768px) {
-  .warning-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-}
-
-@media (max-width: 767px) {
-  .warning-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  align-items: stretch;
+  justify-items: center;
 }
 
 .warning-card {
-  background: white;
-  min-width: 180px !important;
+  background: #ffffff;
   width: 100%;
   border-radius: 16px;
-  padding: 28px 20px 24px;
+  padding: 28px 16px 24px;
   text-align: center;
   border: 1.5px solid;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+  transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  box-sizing: border-box;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.warning-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+  /* strip menyatu dengan card */
 }
 
 .warning-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
-.w-1 {
+/* ── Card color variants ── */
+
+.variant-1 {
   background: #fffbeb;
   border-color: #fde68a;
 }
 
-.w-2 {
+.variant-1::before {
+  background: #f59e0b;
+}
+
+.variant-2 {
   background: #fff7ed;
   border-color: #fed7aa;
 }
 
-.w-3 {
+.variant-2::before {
+  background: #ea580c;
+}
+
+.variant-3 {
   background: #fff1f2;
   border-color: #fecdd3;
 }
 
-.w-4 {
+.variant-3::before {
+  background: #ef4444;
+}
+
+.variant-4 {
   background: #fef2f2;
   border-color: #fca5a5;
 }
 
-/* Angka poin */
+.variant-4::before {
+  background: #991b1b;
+}
+
+/* Poin number */
 
 .w-poin {
-  font-size: 3rem;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -1px;
-  display: block;
 }
 
-.w-1 .w-poin {
+.variant-1 .w-poin {
   color: #d97706;
 }
 
-.w-2 .w-poin {
+.variant-2 .w-poin {
   color: #ea580c;
 }
 
-.w-3 .w-poin {
+.variant-3 .w-poin {
   color: #dc2626;
 }
 
-.w-4 .w-poin {
+.variant-4 .w-poin {
   color: #991b1b;
 }
 
 /* Label */
 
 .w-label {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
   color: #1f2937;
-  white-space: nowrap;
-  display: block;
 }
 
-/* Deskripsi */
+/* Description */
 
 .w-desc {
-  font-size: 0.78rem;
+  font-size: 12px;
   color: #6b7280;
   line-height: 1.55;
-  display: block;
-  /* Biarkan teks wrap natural, jangan batasi dengan lebar fixed */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  /* tambahan untuk browser modern */
+}
+
+/* ─ Decorative diagonal stripe between cards ── */
+
+.warning-grid .stripe-sep {
+  display: none;
+  background: repeating-linear-gradient(
+    -45deg,
+    #a855f7,
+    #a855f7 2px,
+    #c084fc 2px,
+    #c084fc 4px
+  );
+  border-radius: 8px;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .warning-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .warning-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .warning-card {
+    padding: 20px 10px 18px;
+    border-radius: 12px;
+    min-height: 140px;
+  }
+
+  .w-poin {
+    font-size: 1.8rem !important;
+  }
+
+  .w-label {
+    font-size: 11px;
+  }
+
+  .w-desc {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .warning-grid {
+    gap: 8px;
+  }
+
+  .warning-card {
+    padding: 16px 6px 14px;
+    min-height: 120px;
+  }
+
+  .w-poin {
+    font-size: 1.5rem !important;
+  }
 }
 
 /* ── Category tabs ──────────────────────────────────── */
@@ -4042,10 +4184,6 @@ video {
   min-height: 100vh;
 }
 
-.w-1 {
-  width: 0.25rem;
-}
-
 .w-11 {
   width: 2.75rem;
 }
@@ -4058,16 +4196,8 @@ video {
   width: 3.5rem;
 }
 
-.w-2 {
-  width: 0.5rem;
-}
-
 .w-24 {
   width: 6rem;
-}
-
-.w-3 {
-  width: 0.75rem;
 }
 
 .w-4 {
@@ -4932,27 +5062,30 @@ img, svg, video {
 
 /* Portal Santri button (green gradient) */
 
-.btn-portal {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--grad-green);
+.btn-portal-pro {
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
-  font-weight: 700;
-  font-size: .8rem;
-  padding: 9px 18px;
+  padding: 10px 24px;
   border-radius: 12px;
-  transition: opacity .2s, transform .2s;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  white-space: nowrap;
-  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Efek bayangan biar tombolnya 'angkat' */
+  box-shadow: 0 4px 15px rgba(21, 128, 61, 0.25);
 }
 
-.btn-portal:hover {
-  opacity: .9;
-  transform: translateY(-1px);
+.btn-portal-pro:hover {
+  transform: translateY(-2px);
+  /* Efek glow saat di-hover ala PDDIKTI */
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-portal-pro:active {
+  transform: translateY(0);
 }
 
 /* Gold/yellow CTA */

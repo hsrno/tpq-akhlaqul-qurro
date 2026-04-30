@@ -235,25 +235,31 @@ img, svg, video { display: block; max-width: 100%; height: auto; }
    ════════════════════════════════════════ */
 
 /* Portal Santri button (green gradient) */
-.btn-portal {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--grad-green);
+.btn-portal-pro {
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
-  font-weight: 700;
-  font-size: .8rem;
-  padding: 9px 18px;
+  padding: 10px 24px;
   border-radius: 12px;
-  transition: opacity .2s, transform .2s;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  white-space: nowrap;
-  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Efek bayangan biar tombolnya 'angkat' */
+  box-shadow: 0 4px 15px rgba(21, 128, 61, 0.25);
 }
-.btn-portal:hover { opacity: .9; transform: translateY(-1px); }
 
+.btn-portal-pro:hover {
+  transform: translateY(-2px);
+  /* Efek glow saat di-hover ala PDDIKTI */
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-portal-pro:active {
+  transform: translateY(0);
+}
 /* Gold/yellow CTA */
 .btn-gold {
   display: inline-flex;
