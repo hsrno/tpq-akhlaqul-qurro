@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h2>Test Koneksi Supabase</h2>
+    <div id="result">Loading...</div>
+
+    <script>
+        const SUPABASE_URL = "https://bsuozoqhrtkdehvjppdi.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzdW96b2podHJrZGVodmpwcGRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NzYzMDMsImV4cCI6MjA5MzI1MjMwM30.9AJshPyN4n3kED7aDaJGCkYLAx7txFaRiOSpyRm-ouk";
+        
+        const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        async function test() {
+            const { data, error } = await supabase
+                .from('santri')
+                .select('nis, nama_lengkap')
+                .limit(5);
+            
+            if (error) {
+                document.getElementById('result').innerHTML = '❌ Error: ' + error.message;
+            } else {
+                document.getElementById('result').innerHTML = '✅ Berhasil! Data santri: <pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            }
+        }
+        
+        test();
+    </script>
+</body>
+</html>

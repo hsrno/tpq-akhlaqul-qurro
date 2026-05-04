@@ -1,18 +1,21 @@
 /* ════════════════════════════════════════
    TPQ AKHLAQUL QURRO' — pages.css
-   Styling khusus per halaman
+   Styling khusus halaman-halaman statis
+   (global → lihat style.css)
 
    SECTIONS:
-   1.  SHARED      — breadcrumb, page-hero, sec-card, tbl
-   2.  JADWAL      — kelas-tabs, jam-card, catatan-box
-   3.  TENTANG     — visi-banner, misi, tujuan, pengajar
-   4.  PROGRAM     — kelas-grid
-   5.  GALLERY     — gallery grid, filter
-   6.  TATATERTIB  — warning-card, cat-tab, info-box
-   7.  STATISTIK   — stat-grid, stat-item
-   8.  TESTIMONI   — testi-card
-   9.  FAQ         — faq-item halaman
-   10. LOGIN       — login.html (split layout)
+   1.  SHARED       — breadcrumb, page-hero, sec-card, tbl
+   2.  JADWAL       — jadwal-hero, kelas-tabs, jam-card, catatan-box
+   3.  TENTANG      — visi-banner, misi, tujuan, pengajar, kelas-grid
+   4.  PROGRAM      — prog-hero, prog-level, prog-sosial
+   5.  GALLERY      — gallery-grid, filter
+   6.  TATATERTIB   — warning-card, cat-tab, info-box, catatan-box
+   7.  STATISTIK    — stat-grid, stat-item
+   8.  TESTIMONI    — testi-card
+   9.  FAQ          — faq-item
+   10. LOGIN        — split layout, form-card, toast, spinner
+   11. SEARCH PANEL — search-results-panel
+   12. FOOTER       — footer-copyright
    ════════════════════════════════════════ */
 
 /* ════════════════════════════════════════
@@ -38,9 +41,11 @@
   color: white;
 }
 
-.breadcrumb .sep {
+.breadcrumb .sep    {
   color: rgba(255, 255, 255, 0.3);
 }
+
+/* ── Page hero (shared across halaman statis) ── */
 
 .page-hero {
   background: var(--grad-main);
@@ -79,6 +84,8 @@
   max-width: 520px;
 }
 
+/* Quick-tabs di hero halaman */
+
 .quick-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -110,6 +117,8 @@
   border-color: white;
   color: var(--navy);
 }
+
+/* ── Section card ── */
 
 .sec-card {
   background: white;
@@ -151,12 +160,14 @@
   background: var(--gray-soft);
 }
 
+/* ── Table ── */
+
 .tbl {
   width: 100%;
   border-collapse: collapse;
 }
 
-.tbl thead tr {
+.tbl thead tr   {
   background: var(--grad-main);
 }
 
@@ -179,7 +190,7 @@
   border-bottom: none;
 }
 
-.tbl tbody tr:hover {
+.tbl tbody tr:hover      {
   background: #f8faff;
 }
 
@@ -207,12 +218,12 @@
   border-right: 2px solid var(--border);
 }
 
-.tbl .td-mapel {
+.tbl .td-mapel    {
   font-weight: 600;
   color: var(--navy);
 }
 
-.tbl .td-pgj {
+.tbl .td-pgj      {
   font-size: 0.8rem;
   color: #6b7280;
 }
@@ -225,6 +236,8 @@
   color: #6b7280;
   font-size: 0.8rem;
 }
+
+/* ── Info grid & CTA ── */
 
 .info-grid {
   display: grid;
@@ -295,6 +308,45 @@
 /* ════════════════════════════════════════
    2. JADWAL
    ════════════════════════════════════════ */
+
+/* ── Hero halaman jadwal ── */
+
+.jadwal-hero {
+  background: var(--grad-main);
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 50px;
+}
+
+.jadwal-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.jadwal-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.jadwal-hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.jadwal-hero .sub {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  margin: 0 0 24px;
+  max-width: 520px;
+}
 
 .kelas-tabs {
   display: flex;
@@ -433,6 +485,8 @@
   margin-top: 6px;
 }
 
+/* Catatan box di halaman Jadwal (kuning/amber) */
+
 .catatan-box {
   background: #fefce8;
   border: 1px solid #fde68a;
@@ -448,9 +502,11 @@
    3. TENTANG
    ════════════════════════════════════════ */
 
+/* ── Kelas grid (dipakai di halaman tentang) ── */
+
 .kelas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
   padding: 0;
 }
@@ -468,27 +524,24 @@
 }
 
 .kelas-item:hover {
-  border-color: #1b3a6b;
-  box-shadow: 0 4px 12px rgba(27, 58, 107, 0.08);
+  box-shadow: 0 4px 16px rgba(27, 58, 107, 0.12);
   transform: translateY(-2px);
 }
 
 .kelas-nm {
-  font-size: 1rem;
   font-weight: 700;
-  color: #1b3a6b;
-  margin-bottom: 6px;
+  font-size: 0.875rem;
+  color: var(--navy);
 }
 
 .kelas-sub {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-bottom: 12px;
-  font-weight: 500;
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 2px;
 }
 
 .kelas-jam {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -501,23 +554,7 @@
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .kelas-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-}
-
-/* ═══ FIX: CTA Banner — pastikan link di atas pseudo-element ═══ */
-
-.cta-banner > div {
-  position: relative;
-  z-index: 2;
-}
-
-.cta-banner::before {
-  z-index: 1 !important;
-}
+/* Visi & Misi */
 
 .visi-banner {
   background: var(--grad-main);
@@ -544,8 +581,8 @@
   margin: 0 0 10px;
 }
 
-.visi-banner p {
-  color: rgba(255, 255, 255, 0.8);
+.visi-banner p  {
+  color: rgba(255,255,255,0.8);
   font-size: 0.9rem;
   line-height: 1.7;
   font-style: italic;
@@ -605,6 +642,8 @@
   margin-top: 1px;
 }
 
+/* Pengajar card */
+
 .pgj-card {
   background: white;
   border-radius: 16px;
@@ -653,28 +692,19 @@
   line-height: 1.5;
 }
 
-/* ── WA Button: tidak menutupi menu di sub-pages ── */
-
-.wa-btn {
-  bottom: 24px;
-  right: 24px;
-}
-
-body.has-bottom-bar .wa-btn {
-  bottom: 72px;
+@media (max-width: 768px) {
+  .kelas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
 }
 
 /* ════════════════════════════════════════
    4. PROGRAM
    ════════════════════════════════════════ */
 
-/* ── Hero khusus program ─────────────────────────────── */
-
 .prog-hero {
   background: linear-gradient(135deg, #1a7a4a 0%, #0a1a40 60%, #1b3a6b 100%);
 }
-
-/* ── Section header ─────────────────────────────────── */
 
 .prog-section-header {
   text-align: center;
@@ -694,8 +724,6 @@ body.has-bottom-bar .wa-btn {
   max-width: 520px;
   margin: 0 auto;
 }
-
-/* ── Stat grid ringkasan ─────────────────────────────── */
 
 .prog-stat-grid {
   display: grid;
@@ -747,7 +775,7 @@ body.has-bottom-bar .wa-btn {
   font-weight: 500;
 }
 
-/* ── Kelas level cards ───────────────────────────────── */
+/* Level cards */
 
 .prog-level-grid {
   display: grid;
@@ -756,7 +784,7 @@ body.has-bottom-bar .wa-btn {
   margin-bottom: 20px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 640px)  {
   .prog-level-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -785,17 +813,15 @@ body.has-bottom-bar .wa-btn {
   box-shadow: 0 12px 32px rgba(10, 26, 64, 0.12);
 }
 
-/* Warna border-top per level */
-
-.level-iqra {
+.level-iqra    {
   border-top-color: #1b3a6b;
 }
 
-.level-quran {
+.level-quran   {
   border-top-color: #1a7a4a;
 }
 
-.level-tartil {
+.level-tartil  {
   border-top-color: #7c3aed;
 }
 
@@ -819,15 +845,15 @@ body.has-bottom-bar .wa-btn {
   flex-shrink: 0;
 }
 
-.level-iqra .prog-level-icon {
+.level-iqra    .prog-level-icon {
   background: linear-gradient(135deg, #0a1a40, #1b3a6b);
 }
 
-.level-quran .prog-level-icon {
+.level-quran   .prog-level-icon {
   background: linear-gradient(135deg, #1a7a4a, #22a35e);
 }
 
-.level-tartil .prog-level-icon {
+.level-tartil  .prog-level-icon {
   background: linear-gradient(135deg, #7c3aed, #5b21b6);
 }
 
@@ -865,7 +891,7 @@ body.has-bottom-bar .wa-btn {
   gap: 6px;
 }
 
-.prog-meta-item {
+.prog-meta-item  {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -895,8 +921,6 @@ body.has-bottom-bar .wa-btn {
   border: 1px solid #c7d2fe;
 }
 
-/* Link ke jadwal */
-
 .prog-link-jadwal {
   display: inline-flex;
   align-items: center;
@@ -918,7 +942,7 @@ body.has-bottom-bar .wa-btn {
   transform: translateY(-1px);
 }
 
-/* ── Sosial program intro banner ─────────────────────── */
+/* Program sosial intro banner */
 
 .prog-sosial-intro {
   background: var(--grad-main);
@@ -947,14 +971,14 @@ body.has-bottom-bar .wa-btn {
   margin: 10px 0 12px;
 }
 
-.prog-sosial-intro-inner p {
-  color: rgba(255, 255, 255, 0.75);
+.prog-sosial-intro-inner p  {
+  color: rgba(255,255,255,0.75);
   font-size: 0.9rem;
   line-height: 1.7;
   max-width: 640px;
 }
 
-/* ── Feature cards (program sosial) ─────────────────── */
+/* Feature cards */
 
 .prog-feature-card {
   background: white;
@@ -967,11 +991,11 @@ body.has-bottom-bar .wa-btn {
 }
 
 @media (min-width: 768px) {
-  .prog-feature-card {
+  .prog-feature-card           {
     grid-template-columns: 1fr 280px;
   }
 
-  .prog-feature-card-reverse {
+  .prog-feature-card-reverse   {
     grid-template-columns: 280px 1fr;
   }
 
@@ -1005,7 +1029,7 @@ body.has-bottom-bar .wa-btn {
   border-radius: 20px;
 }
 
-.aqku-badge {
+.aqku-badge     {
   background: #dbeafe;
   color: #1e40af;
 }
@@ -1015,7 +1039,7 @@ body.has-bottom-bar .wa-btn {
   color: #5b21b6;
 }
 
-.zakat-badge {
+.zakat-badge    {
   background: #fef3c7;
   color: #92400e;
 }
@@ -1038,14 +1062,12 @@ body.has-bottom-bar .wa-btn {
   line-height: 1.25;
 }
 
-.prog-feature-desc {
+.prog-feature-desc  {
   font-size: 0.875rem;
   color: #6b7280;
   line-height: 1.75;
   margin: 0;
 }
-
-/* Highlight list */
 
 .prog-highlight-list {
   display: flex;
@@ -1059,7 +1081,7 @@ body.has-bottom-bar .wa-btn {
   gap: 12px;
 }
 
-.prog-highlight-dot {
+.prog-highlight-dot  {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -1067,7 +1089,7 @@ body.has-bottom-bar .wa-btn {
   margin-top: 6px;
 }
 
-.aqku-dot {
+.aqku-dot     {
   background: #1e40af;
 }
 
@@ -1075,7 +1097,7 @@ body.has-bottom-bar .wa-btn {
   background: #5b21b6;
 }
 
-.zakat-dot {
+.zakat-dot    {
   background: #d97706;
 }
 
@@ -1087,14 +1109,12 @@ body.has-bottom-bar .wa-btn {
   margin-bottom: 3px;
 }
 
-.prog-highlight-item p {
+.prog-highlight-item p      {
   font-size: 0.82rem;
   color: #6b7280;
   line-height: 1.65;
   margin: 0;
 }
-
-/* Visual panel kanan */
 
 .prog-feature-visual {
   padding: 32px 24px;
@@ -1106,7 +1126,7 @@ body.has-bottom-bar .wa-btn {
   text-align: center;
 }
 
-.aqku-visual {
+.aqku-visual     {
   background: linear-gradient(160deg, #eff6ff, #dbeafe);
 }
 
@@ -1114,7 +1134,7 @@ body.has-bottom-bar .wa-btn {
   background: linear-gradient(160deg, #ede9fe, #ddd6fe);
 }
 
-.zakat-visual {
+.zakat-visual    {
   background: linear-gradient(160deg, #fffbeb, #fef3c7);
 }
 
@@ -1159,26 +1179,24 @@ body.has-bottom-bar .wa-btn {
   box-shadow: 0 2px 8px rgba(10, 26, 64, 0.06);
 }
 
-/* ── Mobile responsive ───────────────────────────────── */
-
 @media (max-width: 640px) {
-  .prog-feature-body {
+  .prog-feature-body           {
     padding: 24px 20px;
   }
 
-  .prog-feature-title {
+  .prog-feature-title          {
     font-size: 1.2rem;
   }
 
-  .prog-feature-visual {
+  .prog-feature-visual         {
     padding: 24px 20px;
   }
 
-  .prog-sosial-intro {
+  .prog-sosial-intro           {
     padding: 24px 20px;
   }
 
-  .prog-sosial-intro-inner h2 {
+  .prog-sosial-intro-inner h2  {
     font-size: 1.2rem;
   }
 }
@@ -1205,9 +1223,7 @@ body.has-bottom-bar .wa-btn {
   position: relative;
   cursor: pointer;
   border: 1px solid var(--border);
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 
 .gallery-item:hover {
@@ -1262,30 +1278,28 @@ body.has-bottom-bar .wa-btn {
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-.gallery-filter-btn:hover {
+.gallery-filter-btn:hover         {
   border-color: var(--navy);
   color: var(--navy);
 }
 
-.gallery-filter-btn.active {
+.gallery-filter-btn.active        {
   background: var(--navy);
   border-color: var(--navy);
   color: white;
 }
 
 /* ════════════════════════════════════════
-   Section 6: TATATERTIB
+   6. TATATERTIB
    ════════════════════════════════════════ */
 
-/* ── Hero khusus tatatertib (merah-navy) ─────────────── */
+/* Hero khusus tatatertib */
 
 .tt-hero {
   background: linear-gradient(135deg, #991b1b 0%, #1b3a6b 100%);
 }
 
-/* ══════/* ═══════════════════════════════════════════════════
-   WARNING GRID — OPTIMIZED
-   ═══════════════════════════════════════════════════ */
+/* Warning grid */
 
 .warning-grid {
   display: grid;
@@ -1324,7 +1338,6 @@ body.has-bottom-bar .wa-btn {
   right: 0;
   height: 4px;
   border-radius: 16px 16px 0 0;
-  /* strip menyatu dengan card */
 }
 
 .warning-card:hover {
@@ -1332,7 +1345,7 @@ body.has-bottom-bar .wa-btn {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
-/* ── Card color variants ── */
+/* Card colour variants */
 
 .variant-1 {
   background: #fffbeb;
@@ -1370,8 +1383,6 @@ body.has-bottom-bar .wa-btn {
   background: #991b1b;
 }
 
-/* Poin number */
-
 .w-poin {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
@@ -1395,92 +1406,20 @@ body.has-bottom-bar .wa-btn {
   color: #991b1b;
 }
 
-/* Label */
-
 .w-label {
   font-size: 13px;
   font-weight: 800;
   color: #1f2937;
 }
 
-/* Description */
-
-.w-desc {
+.w-desc  {
   font-size: 12px;
   color: #6b7280;
   line-height: 1.55;
-  word-wrap: break-word;
   overflow-wrap: break-word;
-  /* tambahan untuk browser modern */
 }
 
-/* ─ Decorative diagonal stripe between cards ── */
-
-.warning-grid .stripe-sep {
-  display: none;
-  background: repeating-linear-gradient(
-    -45deg,
-    #a855f7,
-    #a855f7 2px,
-    #c084fc 2px,
-    #c084fc 4px
-  );
-  border-radius: 8px;
-  opacity: 0.5;
-}
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════ */
-
-@media (max-width: 1024px) {
-  .warning-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-}
-
-@media (max-width: 767px) {
-  .warning-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .warning-card {
-    padding: 20px 10px 18px;
-    border-radius: 12px;
-    min-height: 140px;
-  }
-
-  .w-poin {
-    font-size: 1.8rem !important;
-  }
-
-  .w-label {
-    font-size: 11px;
-  }
-
-  .w-desc {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 380px) {
-  .warning-grid {
-    gap: 8px;
-  }
-
-  .warning-card {
-    padding: 16px 6px 14px;
-    min-height: 120px;
-  }
-
-  .w-poin {
-    font-size: 1.5rem !important;
-  }
-}
-
-/* ── Category tabs ──────────────────────────────────── */
+/* Category tabs */
 
 .cat-tabs {
   display: flex;
@@ -1501,10 +1440,9 @@ body.has-bottom-bar .wa-btn {
   transition: all 0.2s;
   font-family: "Plus Jakarta Sans", sans-serif;
   white-space: nowrap;
-  /* ← FIX: tab tidak wrap */
 }
 
-.cat-tab:hover {
+.cat-tab:hover  {
   border-color: var(--navy);
   color: var(--navy);
 }
@@ -1515,7 +1453,7 @@ body.has-bottom-bar .wa-btn {
   color: white;
 }
 
-/* ── Tatatertib table — poin column ─────────────────── */
+/* Tatatertib table poin column */
 
 .tt-tbl .td-poin {
   text-align: center;
@@ -1526,7 +1464,7 @@ body.has-bottom-bar .wa-btn {
   width: 110px;
 }
 
-/* ── Info boxes ─────────────────────────────────────── */
+/* Info boxes */
 
 .info-box {
   display: flex;
@@ -1546,7 +1484,7 @@ body.has-bottom-bar .wa-btn {
   margin-top: 2px;
 }
 
-.info-blue {
+.info-blue   {
   background: #eef2ff;
   border-color: #c7d2fe;
   color: var(--navy);
@@ -1558,29 +1496,26 @@ body.has-bottom-bar .wa-btn {
   color: #92400e;
 }
 
-.info-red {
+.info-red    {
   background: #fff1f2;
   border-color: #fecdd3;
   color: #9f1239;
 }
 
-.info-green {
+.info-green  {
   background: #f0fdf4;
   border-color: #86efac;
   color: #166534;
 }
 
-/* ── Catatan box (tatatertib — style berbeda dari jadwal) */
+/* Catatan box — halaman Tatatertib (merah, berbeda dari Jadwal) */
 
-.catatan-box {
+.catatan-box.tt-catatan,
+.tt-catatan .catatan-box {
   background: #fef2f2;
   border: 1px solid #fca5a5;
   border-left: 4px solid #ef4444;
-  border-radius: 12px;
-  padding: 18px 20px;
-  font-size: 0.875rem;
   color: #7f1d1d;
-  margin-bottom: 20px;
 }
 
 .catatan-box h4 {
@@ -1596,8 +1531,7 @@ body.has-bottom-bar .wa-btn {
   gap: 8px;
 }
 
-.catatan-list li,
-.catatan-list div {
+.catatan-item {
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -1606,7 +1540,11 @@ body.has-bottom-bar .wa-btn {
   line-height: 1.6;
 }
 
-/* ── Sanksi/danger box ──────────────────────────────── */
+.catatan-dot {
+  color: #9ca3af;
+}
+
+/* Sanksi/danger box */
 
 .sanction-box {
   background: #fff5f5;
@@ -1625,29 +1563,57 @@ body.has-bottom-bar .wa-btn {
   font-size: 0.9rem;
 }
 
-/* ── Mobile fix ─────────────────────────────────────── */
+/* Responsive tatatertib */
 
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .warning-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .warning-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .warning-card {
-    padding: 18px 12px;
+    padding: 20px 10px 18px;
+    border-radius: 12px;
+    min-height: 140px;
   }
 
-  .w-poin {
-    font-size: 2.4rem;
+  .w-poin       {
+    font-size: 1.8rem !important;
   }
 
-  .w-label {
-    font-size: 0.78rem;
+  .w-label      {
+    font-size: 11px;
   }
 
-  .cat-tab {
+  .w-desc       {
+    font-size: 10px;
+  }
+
+  .cat-tab      {
     font-size: 0.74rem;
     padding: 6px 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .warning-grid {
+    gap: 8px;
+  }
+
+  .warning-card {
+    padding: 16px 6px 14px;
+    min-height: 120px;
+  }
+
+  .w-poin       {
+    font-size: 1.5rem !important;
   }
 }
 
@@ -1686,14 +1652,14 @@ body.has-bottom-bar .wa-btn {
   margin-bottom: 8px;
 }
 
-.stat-num {
+.stat-num   {
   font-size: 2rem;
   font-weight: 900;
   color: var(--navy);
   line-height: 1;
 }
 
-.stat-lbl {
+.stat-lbl   {
   font-size: 0.8rem;
   color: #6b7280;
   margin-top: 4px;
@@ -1729,14 +1695,14 @@ body.has-bottom-bar .wa-btn {
   transform: translateY(-2px);
 }
 
-.testi-stars {
+.testi-stars  {
   color: #facc15;
   font-size: 1rem;
   margin-bottom: 12px;
   letter-spacing: 2px;
 }
 
-.testi-text {
+.testi-text   {
   font-size: 0.875rem;
   color: #374151;
   line-height: 1.7;
@@ -1774,7 +1740,7 @@ body.has-bottom-bar .wa-btn {
 }
 
 /* ════════════════════════════════════════
-   9. FAQ (halaman tentang)
+   9. FAQ
    ════════════════════════════════════════ */
 
 .faq-item {
@@ -1786,10 +1752,7 @@ body.has-bottom-bar .wa-btn {
   transition: border-color 0.2s;
 }
 
-.faq-item:hover {
-  border-color: var(--navy);
-}
-
+.faq-item:hover,
 .faq-item[open] {
   border-color: var(--navy);
 }
@@ -1811,7 +1774,7 @@ body.has-bottom-bar .wa-btn {
   display: none;
 }
 
-.faq-item .faq-chevron {
+.faq-chevron {
   transition: transform 0.3s;
   color: #9ca3af;
   flex-shrink: 0;
@@ -1830,13 +1793,11 @@ body.has-bottom-bar .wa-btn {
 }
 
 /* ════════════════════════════════════════
-   10. LOGIN — santri.html (split layout)
-   CATATAN: TIDAK ada body override di sini.
-   Kalau perlu background abu, tambah class
-   .login-page ke <body> di santri.html saja.
+   10. LOGIN (login.html — split layout)
+   CATATAN: tidak ada override body di sini.
+   Jika perlu background abu, tambah class
+   .login-page ke <body> di login.html saja.
    ════════════════════════════════════════ */
-
-/* Split layout */
 
 .login-left {
   background: var(--grad-main);
@@ -1862,7 +1823,7 @@ body.has-bottom-bar .wa-btn {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Role tab */
+/* Role tabs */
 
 .role-tab {
   display: flex;
@@ -1921,9 +1882,7 @@ body.has-bottom-bar .wa-btn {
   border-radius: 12px;
   font-size: 0.9rem;
   color: #1f2937;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
   background: #fafafa;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -1950,8 +1909,6 @@ body.has-bottom-bar .wa-btn {
 .input-group:focus-within .input-icon {
   color: var(--navy);
 }
-
-/* Toggle password */
 
 .toggle-pw {
   position: absolute;
@@ -1998,17 +1955,15 @@ body.has-bottom-bar .wa-btn {
   box-shadow: 0 6px 20px rgba(27, 58, 107, 0.3);
 }
 
-.btn-login:active {
+.btn-login:active    {
   transform: translateY(0);
 }
 
-.btn-login:disabled {
+.btn-login:disabled  {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
 }
-
-/* Info box santri.html */
 
 .info-box-login {
   background: #eef2ff;
@@ -2039,11 +1994,11 @@ body.has-bottom-bar .wa-btn {
   max-width: 320px;
 }
 
-.toast.show {
+.toast.show    {
   transform: translateX(0);
 }
 
-.toast.error {
+.toast.error   {
   background: #fee2e2;
   color: #b91c1c;
   border: 1px solid #fca5a5;
@@ -2073,7 +2028,7 @@ body.has-bottom-bar .wa-btn {
   display: none;
 }
 
-.btn-login.loading .spinner {
+.btn-login.loading .spinner  {
   display: block;
 }
 
@@ -2089,22 +2044,22 @@ body.has-bottom-bar .wa-btn {
     transform: translateY(16px);
   }
 
-  to {
+  to   {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.fade-up {
-  animation: fadeSlideUp 0.5s ease both;
+.fade-up   {
+  animation: fadeSlideUp 0.5s 0s   ease both;
 }
 
 .fade-up-2 {
-  animation: fadeSlideUp 0.5s 0.1s ease both;
+  animation: fadeSlideUp 0.5s .1s  ease both;
 }
 
 .fade-up-3 {
-  animation: fadeSlideUp 0.5s 0.2s ease both;
+  animation: fadeSlideUp 0.5s .2s  ease both;
 }
 
 @media (max-width: 768px) {
@@ -2113,96 +2068,96 @@ body.has-bottom-bar .wa-btn {
     padding: 32px 24px;
   }
 
-  .form-card {
+  .form-card  {
     padding: 28px 24px;
-  }
-
-  /* ════════════════════════════════════════
-   11. SEARCH RESULTS PANEL
-   ════════════════════════════════════════ */
-
-  .search-results-panel {
-    position: fixed;
-    top: 72px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(540px, 92vw);
-    max-height: 480px;
-    background: white;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    box-shadow: 0 20px 60px rgba(10, 26, 64, 0.15);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    overflow-y: auto;
-    transition: opacity 0.25s, visibility 0.25s;
-  }
-
-  .search-results-panel.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .search-results-header {
-    padding: 12px 16px;
-    background: var(--gray-soft);
-    border-bottom: 1px solid var(--border);
-    font-size: 0.75rem;
-    color: #9ca3af;
-    font-weight: 600;
-  }
-
-  .search-result-item {
-    display: block;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-    text-decoration: none;
-  }
-
-  .search-result-item:last-child {
-    border-bottom: none;
-  }
-
-  .search-result-item:hover {
-    background: var(--gray-soft);
-  }
-
-  .search-result-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 6px;
-    background: #eef2ff;
-    color: var(--navy);
-    margin-bottom: 4px;
-  }
-
-  .search-result-title {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin: 0 0 2px;
-  }
-
-  .search-result-desc {
-    font-size: 0.78rem;
-    color: #6b7280;
-    margin: 0;
-  }
-
-  @media (max-width: 480px) {
-    .search-results-panel {
-      top: 64px;
-      width: 96vw;
-    }
   }
 }
 
 /* ════════════════════════════════════════
-   12. FOOTER COPYRIGHT UNIFIED
+   11. SEARCH RESULTS PANEL
+   ════════════════════════════════════════ */
+
+.search-results-panel {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(540px, 92vw);
+  max-height: 480px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(10, 26, 64, 0.15);
+  z-index: 150;
+  opacity: 0;
+  visibility: hidden;
+  overflow-y: auto;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.search-results-panel.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-results-header {
+  padding: 12px 16px;
+  background: var(--gray-soft);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.search-result-item {
+  display: block;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+  text-decoration: none;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover      {
+  background: var(--gray-soft);
+}
+
+.search-result-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #eef2ff;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.search-result-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 2px;
+}
+
+.search-result-desc  {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .search-results-panel {
+    top: 64px;
+    width: 96vw;
+  }
+}
+
+/* ════════════════════════════════════════
+   12. FOOTER COPYRIGHT
    ════════════════════════════════════════ */
 
 .footer-copyright {
@@ -2219,31 +2174,31 @@ body.has-bottom-bar .wa-btn {
   color: #9ca3af;
 }
 
-.footer-copyright a {
+.footer-copyright a          {
   color: #f5c842;
   transition: color 0.2s;
 }
 
-.footer-copyright a:hover {
+.footer-copyright a:hover    {
   color: #fbbf24;
 }
 
-.copyright-divider {
+.copyright-divider           {
   margin: 0 6px;
   opacity: 0.4;
 }
 
 @media (max-width: 640px) {
-  .footer-copyright {
+  .footer-copyright          {
     justify-content: center;
     text-align: center;
   }
 
-  .copyright-divider {
+  .copyright-divider         {
     display: none;
   }
 
-  .footer-copyright a {
+  .footer-copyright a        {
     display: block;
     margin-top: 4px;
   }
@@ -4151,6 +4106,14 @@ video {
   z-index: 10;
 }
 
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -4445,6 +4408,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -4916,30 +4883,27 @@ video {
 /* ════════════════════════════════════════
    TPQ AKHLAQUL QURRO' — style.css
    Global styles & component library
+   (halaman-spesifik → lihat pages.css)
 
    SECTIONS:
    1.  CSS VARIABLES
-   2.  GOOGLE FONTS IMPORT
-   3.  BASE / RESET
-   4.  NAVBAR
-   5.  MOBILE MENU & ACCORDION
-   6.  LANGUAGE TOGGLE BUTTONS
-   7.  BUTTONS (btn-portal, btn-gold, etc.)
-   8.  BADGE
-   9.  HERO SECTION (index)
-   10. SEARCH BOX
-   11. MENU CARDS (icon grid)
-   12. STAT CARDS
-   13. PROGRAM CARDS
-   14. SECTION HEADER
-   15. CTA BANNER
-   16. WA FLOAT BUTTON
-   17. SOCIAL BUTTONS
-   18. BAR CHART ANIMATION
-   19. FLOAT ANIMATION
-   20. SCROLL ANIMATIONS
-   21. JADWAL HERO
-   22. SHADOW & UTILITY HELPERS
+   2.  BASE / RESET
+   3.  NAVBAR & DROPDOWN
+   4.  MOBILE MENU & ACCORDION
+   5.  LANGUAGE TOGGLE BUTTONS
+   6.  BUTTONS
+   7.  BADGE
+   8.  HERO SECTION (index)
+   9.  SEARCH BOX
+   10. MENU CARDS (icon grid)
+   11. STAT CARDS
+   12. PROGRAM CARDS
+   13. SECTION HEADER
+   14. CTA BANNER
+   15. WA FLOAT BUTTON
+   16. SOCIAL BUTTONS
+   17. BAR CHART ANIMATION
+   18. UTILITY HELPERS
    ════════════════════════════════════════ */
 
 /* ════════════════════════════════════════
@@ -4948,18 +4912,18 @@ video {
 
 :root {
   /* Brand colours */
-  --navy:       #0A1A40;
-  --navy-dark:  #060e25;
-  --navy-light: #1b3a6b;
-  --green:      #1A7A4A;
-  --green-light:#22a35e;
-  --gold:       #C8960C;
-  --gold-light: #F5C842;
+  --navy:        #0A1A40;
+  --navy-dark:   #060e25;
+  --navy-light:  #1b3a6b;
+  --green:       #1A7A4A;
+  --green-light: #22a35e;
+  --gold:        #C8960C;
+  --gold-light:  #F5C842;
   /* Neutrals */
   --border:     #e5e9f2;
   --gray-soft:  #f4f6fb;
   --soft:       #e5e9f2;
-  /* alias for border, used in HTML */
+  /* alias --border, dipakai di HTML */
   /* Gradients */
   --grad-main:  linear-gradient(135deg, #0A1A40 0%, #1b3a6b 60%, #1A7A4A 100%);
   --grad-green: linear-gradient(135deg, #1A7A4A, #22a35e);
@@ -4969,7 +4933,7 @@ video {
   --grad-char:  linear-gradient(135deg, #d1fae5, #6ee7b7);
 }
 
-/* Tailwind-style gradient background utilities */
+/* Tailwind-style gradient utilities */
 
 .bg-grad-main  {
   background: var(--grad-main);
@@ -4983,30 +4947,33 @@ video {
   background: var(--grad-navy);
 }
 
-/* Text colour utilities not in Tailwind default */
+/* Colour utilities tidak ada di Tailwind default */
 
-.text-green {
+.text-green  {
   color: var(--green);
 }
 
-.text-gold  {
+.text-gold   {
   color: var(--gold);
 }
 
+.bg-soft     {
+  background: var(--gray-soft);
+}
+
+.border-soft {
+  border-color: var(--border) !important;
+}
+
 /* ════════════════════════════════════════
-   2. FONTS
+   2. BASE / RESET
    ════════════════════════════════════════ */
 
-/* Plus Jakarta Sans is loaded via <link> in HTML.
-   Poppins is declared here as fallback reference   */
+/* Plus Jakarta Sans di-load via <link> di HTML */
 
 body {
   font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
 }
-
-/* ════════════════════════════════════════
-   3. BASE
-   ════════════════════════════════════════ */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -5016,7 +4983,7 @@ html {
   scroll-behavior: smooth;
 }
 
-a {
+a   {
   text-decoration: none;
   color: inherit;
 }
@@ -5028,7 +4995,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   4. NAVBAR
+   3. NAVBAR & DROPDOWN
    ════════════════════════════════════════ */
 
 .navbar {
@@ -5042,13 +5009,8 @@ img, svg, video {
   transition: box-shadow .25s;
 }
 
-#mobile-menu {
-  position: relative;
-  z-index: 99;
-}
-
 .navbar.scrolled {
-  box-shadow: 0 4px 20px rgba(10,26,64,.10);
+  box-shadow: 0 4px 20px rgba(10, 26, 64, .10);
 }
 
 /* Desktop nav links */
@@ -5069,7 +5031,7 @@ img, svg, video {
   color: var(--navy);
 }
 
-/* ── Dropdown ── */
+/* Dropdown */
 
 .dropdown-wrap {
   position: relative;
@@ -5083,7 +5045,7 @@ img, svg, video {
   background: white;
   border: 1px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 12px 32px rgba(10,26,64,.13);
+  box-shadow: 0 12px 32px rgba(10, 26, 64, .13);
   padding: 8px;
   min-width: 200px;
   display: none;
@@ -5119,8 +5081,104 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   5. MOBILE MENU & ACCORDION
+   4. MOBILE MENU & ACCORDION
    ════════════════════════════════════════ */
+
+/* ── Mobile menu — satu deklarasi lengkap ── */
+
+#mobile-menu {
+  position: relative;
+  z-index: 99;
+  display: block !important;
+  /* override Tailwind class="hidden" */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity    0.30s ease;
+}
+
+#mobile-menu.open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* ── Hamburger → X animation ── */
+
+#menu-btn svg rect {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+#menu-btn.menu-open svg rect:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+#menu-btn.menu-open svg rect:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+#menu-btn.menu-open svg rect:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Link & trigger di dalam mobile menu ── */
+
+#mobile-menu a:not(.btn-portal-pro),
+#mobile-menu button.mobile-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  width: 100%;
+}
+
+#mobile-menu a:not(.btn-portal-pro):hover,
+#mobile-menu button.mobile-acc-trigger:hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+  padding-left: 16px;
+}
+
+#mobile-menu a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  padding-left: 16px;
+  border-left: 3px solid var(--navy);
+}
+
+/* Submenu accordion links */
+
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro) {
+  font-size: 0.85rem;
+  padding: 8px 12px 8px 20px;
+  color: #6b7280;
+}
+
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro):hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+#mobile-menu .mobile-accordion a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  border-left: 3px solid var(--navy-light);
+}
+
+/* ── Accordion trigger ── */
 
 .mobile-acc-trigger {
   display: flex;
@@ -5155,102 +5213,8 @@ img, svg, video {
   max-height: 300px;
 }
 
-/* ── Mobile Menu Smooth Animation ── */
-
-#mobile-menu {
-  display: block !important;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease;
-  opacity: 0;
-}
-
-#mobile-menu.open {
-  max-height: 500px;
-  opacity: 1;
-}
-
-/* ── Hamburger Icon Animation ── */
-
-#menu-btn svg rect {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform-origin: center;
-}
-
-/* Saat menu open: 3 garis jadi X */
-
-#menu-btn.menu-open svg rect:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-#menu-btn.menu-open svg rect:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-#menu-btn.menu-open svg rect:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
 /* ════════════════════════════════════════
-   MOBILE MENU — REFINED INTERACTION
-   ════════════════════════════════════════ */
-
-/* Base link mobile */
-
-#mobile-menu a:not(.btn-portal-pro),
-#mobile-menu button.mobile-acc-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #374151;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  width: 100%;
-}
-
-#mobile-menu a:not(.btn-portal-pro):hover,
-#mobile-menu button.mobile-acc-trigger:hover {
-  background: #f0f4ff;
-  color: var(--navy);
-  font-weight: 600;
-  padding-left: 16px;
-}
-
-#mobile-menu a.mobile-active:not(.btn-portal-pro) {
-  background: #eef2ff;
-  color: var(--navy);
-  font-weight: 700;
-  padding-left: 16px;
-  border-left: 3px solid var(--navy);
-}
-
-#mobile-menu .mobile-accordion a:not(.btn-portal-pro) {
-  font-size: 0.85rem;
-  padding: 8px 12px 8px 20px;
-  color: #6b7280;
-}
-
-#mobile-menu .mobile-accordion a:not(.btn-portal-pro):hover {
-  background: #f0f4ff;
-  color: var(--navy);
-  font-weight: 600;
-}
-
-#mobile-menu .mobile-accordion a.mobile-active:not(.btn-portal-pro) {
-  background: #eef2ff;
-  color: var(--navy);
-  font-weight: 700;
-  border-left: 3px solid var(--navy-light);
-}
-
-/* ════════════════════════════════════════
-   6. LANGUAGE TOGGLE BUTTONS
+   5. LANGUAGE TOGGLE BUTTONS
    ════════════════════════════════════════ */
 
 .lang-btn {
@@ -5264,15 +5228,11 @@ img, svg, video {
   font-family: inherit;
 }
 
-/* ID active = green */
-
-.lang-btn.active-id {
+.lang-btn.active-id   {
   background: var(--green);
   color: white;
   border-color: var(--green);
 }
-
-/* ID inactive */
 
 .lang-btn.inactive-id {
   background: transparent;
@@ -5280,15 +5240,11 @@ img, svg, video {
   border-color: var(--border);
 }
 
-/* EN active = navy */
-
-.lang-btn.active-en {
+.lang-btn.active-en   {
   background: var(--navy);
   color: white;
   border-color: var(--navy);
 }
-
-/* EN inactive */
 
 .lang-btn.inactive-en {
   background: transparent;
@@ -5296,44 +5252,58 @@ img, svg, video {
   border-color: var(--border);
 }
 
-.lang-btn:hover {
+.lang-btn:hover       {
   opacity: .85;
 }
 
 /* ════════════════════════════════════════
-   7. BUTTONS
+   6. BUTTONS
    ════════════════════════════════════════ */
 
-/* Portal Santri button (green gradient) */
-
-/* SESUDAH */
+/* Portal Santri — pill green gradient */
 
 .btn-portal-pro {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
   padding: 10px 20px;
   border-radius: 50px;
-  /* ← pill shape, lebih modern */
   font-weight: 700;
   font-size: 0.85rem;
-  /* ← lebih kecil di mobile */
-  display: inline-flex;
-  /* ← tidak full-width */
-  align-items: center;
-  gap: 8px;
   white-space: nowrap;
-  /* ← tidak wrap */
   box-shadow: 0 4px 15px rgba(21, 128, 61, 0.25);
   transition: all 0.3s ease;
 }
 
-.btn-portal-pro:hover {
+.btn-portal-pro:hover  {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
 }
 
 .btn-portal-pro:active {
   transform: translateY(0);
+}
+
+/* Portal/CTA — navy gradient (halaman pages) */
+
+.btn-portal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grad-main);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  transition: opacity .2s, transform .2s;
+}
+
+.btn-portal:hover {
+  opacity: .9;
+  transform: translateY(-1px);
 }
 
 /* Gold/yellow CTA */
@@ -5349,7 +5319,6 @@ img, svg, video {
   padding: 11px 22px;
   border-radius: 12px;
   transition: background .2s, transform .2s;
-  text-decoration: none;
 }
 
 .btn-gold:hover {
@@ -5357,7 +5326,7 @@ img, svg, video {
   transform: translateY(-1px);
 }
 
-/* White outline (for dark backgrounds) */
+/* White outline (dark backgrounds) */
 
 .btn-outline-white {
   display: inline-flex;
@@ -5369,17 +5338,16 @@ img, svg, video {
   font-size: .875rem;
   padding: 11px 22px;
   border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.45);
+  border: 2px solid rgba(255, 255, 255, 0.45);
   transition: border-color .2s, background .2s;
-  text-decoration: none;
 }
 
 .btn-outline-white:hover {
   border-color: white;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* White fill with navy text */
+/* White fill + navy text */
 
 .btn-white-navy {
   display: inline-flex;
@@ -5393,7 +5361,6 @@ img, svg, video {
   border-radius: 12px;
   border: 2px solid var(--navy);
   transition: all .2s;
-  text-decoration: none;
 }
 
 .btn-white-navy:hover {
@@ -5402,7 +5369,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   8. BADGE
+   7. BADGE
    ════════════════════════════════════════ */
 
 .badge {
@@ -5414,11 +5381,11 @@ img, svg, video {
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .02em;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ════════════════════════════════════════
-   9. HERO SECTION (index.html)
+   8. HERO SECTION (index.html)
    ════════════════════════════════════════ */
 
 .hero-section {
@@ -5433,8 +5400,6 @@ img, svg, video {
   inset: 0;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
-
-/* Entry animations */
 
 .anim-1 {
   animation: fadeSlideUp .65s ease both;
@@ -5456,8 +5421,6 @@ img, svg, video {
   }
 }
 
-/* Floating animation for SVG illustration */
-
 .float {
   animation: floatBob 4s ease-in-out infinite;
 }
@@ -5473,7 +5436,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   10. SEARCH BOX
+   9. SEARCH BOX
    ════════════════════════════════════════ */
 
 .search-wrap {
@@ -5488,7 +5451,7 @@ img, svg, video {
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(10,26,64,.14);
+  box-shadow: 0 8px 32px rgba(10, 26, 64, .14);
   border: 1px solid var(--border);
 }
 
@@ -5522,7 +5485,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   11. MENU CARDS (icon grid)
+   10. MENU CARDS (icon grid — index.html)
    ════════════════════════════════════════ */
 
 .menu-card {
@@ -5535,13 +5498,13 @@ img, svg, video {
 }
 
 .menu-card:hover {
-  box-shadow: 0 8px 24px rgba(10,26,64,.12);
+  box-shadow: 0 8px 24px rgba(10, 26, 64, .12);
   transform: translateY(-3px);
   border-color: var(--navy-light);
 }
 
 /* ════════════════════════════════════════
-   12. STAT CARDS (homepage)
+   11. STAT CARDS (index.html)
    ════════════════════════════════════════ */
 
 .stat-card {
@@ -5553,10 +5516,8 @@ img, svg, video {
 
 .hover-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(0,0,0,.15);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .15);
 }
-
-/* 4 gradient backgrounds for stat cards */
 
 .bg-stat-1 {
   background: linear-gradient(135deg, #0A1A40, #1b3a6b);
@@ -5575,7 +5536,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   13. PROGRAM CARDS (homepage)
+   12. PROGRAM CARDS (index.html)
    ════════════════════════════════════════ */
 
 .prog-card {
@@ -5587,12 +5548,12 @@ img, svg, video {
 }
 
 .prog-card:hover {
-  box-shadow: 0 12px 32px rgba(10,26,64,.11);
+  box-shadow: 0 12px 32px rgba(10, 26, 64, .11);
   transform: translateY(-3px);
 }
 
 /* ════════════════════════════════════════
-   14. SECTION HEADER (title + "see more" link)
+   13. SECTION HEADER (title + "see more")
    ════════════════════════════════════════ */
 
 .section-header {
@@ -5622,7 +5583,7 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   15. CTA BANNER (homepage contact section)
+   14. CTA BANNER (index.html contact)
    ════════════════════════════════════════ */
 
 .cta-banner {
@@ -5634,15 +5595,25 @@ img, svg, video {
   isolation: isolate;
 }
 
+/* Pseudo-element dekoratif — di bawah konten */
+
 .cta-banner::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
+/* Konten tetap di atas pseudo-element */
+
+.cta-banner > div {
+  position: relative;
+  z-index: 2;
+}
+
 /* ════════════════════════════════════════
-   16. WA FLOAT BUTTON
+   15. WA FLOAT BUTTON
    ════════════════════════════════════════ */
 
 .wa-btn {
@@ -5659,26 +5630,32 @@ img, svg, video {
   font-size: .82rem;
   padding: 12px 18px;
   border-radius: 50px;
-  box-shadow: 0 6px 20px rgba(37,211,102,.40);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, .40);
   transition: transform .2s, box-shadow .2s;
   text-decoration: none;
 }
 
 .wa-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(37,211,102,.50);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, .50);
+}
+
+/* Geser ke atas jika ada bottom bar di sub-pages */
+
+body.has-bottom-bar .wa-btn {
+  bottom: 72px;
 }
 
 /* ════════════════════════════════════════
-   17. SOCIAL BUTTONS (footer)
+   16. SOCIAL BUTTONS (footer)
    ════════════════════════════════════════ */
 
 .social-btn {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5686,11 +5663,11 @@ img, svg, video {
 }
 
 .social-btn:hover {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 /* ════════════════════════════════════════
-   18. BAR CHART ANIMATION (menu card icon)
+   17. BAR CHART ANIMATION (menu card icon)
    ════════════════════════════════════════ */
 
 .bar-chart {
@@ -5708,17 +5685,17 @@ img, svg, video {
 
 .bar-1 {
   height: 50%;
-  animation: barGrow 1.5s ease-in-out infinite alternate;
+  animation: barGrow 1.5s 0s   ease-in-out infinite alternate;
 }
 
 .bar-2 {
   height: 80%;
-  animation: barGrow 1.5s .2s ease-in-out infinite alternate;
+  animation: barGrow 1.5s .2s  ease-in-out infinite alternate;
 }
 
 .bar-3 {
   height: 65%;
-  animation: barGrow 1.5s .4s ease-in-out infinite alternate;
+  animation: barGrow 1.5s .4s  ease-in-out infinite alternate;
 }
 
 @keyframes barGrow {
@@ -5734,254 +5711,11 @@ img, svg, video {
 }
 
 /* ════════════════════════════════════════
-   19. SHADOW HELPERS
+   18. UTILITY HELPERS
    ════════════════════════════════════════ */
 
 .shadow-2 {
-  box-shadow: 0 4px 16px rgba(10,26,64,.10);
-}
-
-/* ════════════════════════════════════════
-   20. JADWAL HERO
-   ════════════════════════════════════════ */
-
-.jadwal-hero {
-  background: var(--grad-main);
-  position: relative;
-  overflow: hidden;
-  padding: 40px 0 50px;
-}
-
-.jadwal-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-.jadwal-hero-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.jadwal-hero h1 {
-  font-size: 2rem;
-  font-weight: 800;
-  color: white;
-  line-height: 1.25;
-  margin: 0 0 8px;
-}
-
-.jadwal-hero .sub {
-  color: rgba(255,255,255,0.65);
-  font-size: .9rem;
-  margin: 0 0 24px;
-  max-width: 520px;
-}
-
-/* ════════════════════════════════════════
-   21. TATA TERTIB HERO
-   ════════════════════════════════════════ */
-
-.tt-hero {
-  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 50%, #0A1A40 100%);
-}
-
-/* ════════════════════════════════════════
-   22. TATA TERTIB — Warning Cards
-   ════════════════════════════════════════ */
-
-.warning-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-@media (min-width: 768px) {
-  .warning-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.warning-card {
-  border-radius: 16px;
-  padding: 20px 16px;
-  text-align: center;
-  border: 1px solid transparent;
-}
-
-.warning-card.w-1 {
-  background: #fff7ed;
-  border-color: #fed7aa;
-}
-
-.warning-card.w-2 {
-  background: #fffbeb;
-  border-color: #fde68a;
-}
-
-.warning-card.w-3 {
-  background: #fff1f2;
-  border-color: #fecdd3;
-}
-
-.warning-card.w-4 {
-  background: #fef2f2;
-  border-color: #fca5a5;
-}
-
-.w-poin {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--navy);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.w-label {
-  font-size: .8rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 4px;
-}
-
-.w-desc {
-  font-size: .72rem;
-  color: #6b7280;
-  line-height: 1.5;
-}
-
-/* ════════════════════════════════════════
-   23. TATA TERTIB — Category Tabs & Table
-   ════════════════════════════════════════ */
-
-.cat-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.cat-tab {
-  padding: 7px 16px;
-  border-radius: 20px;
-  font-size: .8rem;
-  font-weight: 600;
-  border: 2px solid var(--border);
-  background: white;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all .2s;
-  font-family: inherit;
-}
-
-.cat-tab:hover  {
-  border-color: var(--navy);
-  color: var(--navy);
-}
-
-.cat-tab.active {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: white;
-}
-
-/* Tatatertib table — poin column */
-
-.tt-tbl .td-poin {
-  text-align: center;
-  font-weight: 800;
-  color: #b91c1c;
-  font-size: .95rem;
-  white-space: nowrap;
-}
-
-/* ════════════════════════════════════════
-   24. INFO BOXES (tatatertib)
-   ════════════════════════════════════════ */
-
-.info-box {
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: .82rem;
-  line-height: 1.6;
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.info-icon {
-  font-size: 1rem;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.info-blue   {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  color: #1e40af;
-}
-
-.info-yellow {
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  color: #92400e;
-}
-
-.info-red    {
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-  color: #9f1239;
-}
-
-.info-green  {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-}
-
-/* ════════════════════════════════════════
-   25. CATATAN LIST (tatatertib)
-   ════════════════════════════════════════ */
-
-.catatan-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.catatan-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: .82rem;
-  color: #374151;
-  line-height: 1.6;
-}
-
-.catatan-item::before {
-  content: '•';
-  color: var(--gold);
-  font-size: 1rem;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-/* ════════════════════════════════════════
-   26. BG-SOFT (alias used in HTML)
-   ════════════════════════════════════════ */
-
-.bg-soft {
-  background: var(--gray-soft);
-}
-
-.border-soft {
-  border-color: var(--border) !important;
+  box-shadow: 0 4px 16px rgba(10, 26, 64, .10);
 }
 
 .hover\:gap-2:hover {
@@ -6037,6 +5771,14 @@ img, svg, video {
 }
 
 @media (min-width: 768px) {
+  .md\:order-1 {
+    order: 1;
+  }
+
+  .md\:order-2 {
+    order: 2;
+  }
+
   .md\:col-span-1 {
     grid-column: span 1 / span 1;
   }

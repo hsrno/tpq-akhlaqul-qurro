@@ -9,11 +9,11 @@
    - Jangan duplikasi logic dari main.js
 
    SECTIONS:
-   1. SHARED    — navbar shadow, mobile menu,
-                  mobile accordion, counter
-   2. JADWAL    — showJadwal(), render tabel
-   3. TATATERTIB— showKategori(), renderCatatan()
-   4. TENTANG   — render materi pengajar
+   1. SHARED      — navbar shadow, mobile menu,
+                    mobile accordion, counter
+   2. JADWAL      — showJadwal(), render tabel
+   3. TATATERTIB  — showKategori(), renderCatatan()
+   4. TENTANG     — render materi pengajar
    ════════════════════════════════════════ */
 
 (function () {
@@ -27,6 +27,7 @@
   function initNavbar() {
     var navbar = document.getElementById("navbar");
     if (!navbar) return;
+
     window.addEventListener("scroll", function () {
       navbar.classList.toggle("scrolled", window.scrollY > 40);
     });
@@ -38,28 +39,48 @@
     var mobileMenu = document.getElementById("mobile-menu");
     if (!menuBtn || !mobileMenu) return;
 
+    /* Toggle buka / tutup */
     menuBtn.addEventListener("click", function () {
       mobileMenu.classList.toggle("open");
       menuBtn.classList.toggle("menu-open");
     });
 
+    /* Dipanggil oleh onclick="closeMobile()" di link mobile */
     window.closeMobile = function () {
       mobileMenu.classList.remove("open");
       menuBtn.classList.remove("menu-open");
     };
 
-    /* ── Auto-detect active page ── */ // ← TAMBAH DI SINI
+    /* Auto-hide + smooth close saat layar melebar ke desktop */
+    var mq = window.matchMedia("(min-width: 768px)");
+
+    mq.addEventListener("change", function (e) {
+      if (!e.matches) return;
+      mobileMenu.classList.remove("open");
+      menuBtn.classList.remove("menu-open");
+      /* Tutup accordion sekalian */
+      var accBtn = document.getElementById("acc-btn");
+      var accContent = document.getElementById("acc-content");
+      if (accBtn) accBtn.classList.remove("open");
+      if (accContent) accContent.classList.remove("open");
+    });
+
+    /* Auto-detect halaman aktif di link mobile */
     var path = window.location.pathname;
+
     document.querySelectorAll("#mobile-menu a").forEach(function (link) {
       var href = link.getAttribute("href");
       if (!href) return;
+
       var isActive = false;
+
       if (href.includes("index")) {
         isActive = path === "/" || path.endsWith("index.html");
       } else {
         var pageName = href.replace(/.*\//, "").replace(".html", "");
-        isActive = path.includes(pageName) && pageName !== "";
+        isActive = pageName !== "" && path.includes(pageName);
       }
+
       if (isActive) link.classList.add("mobile-active");
     });
   }
@@ -69,6 +90,7 @@
     var btn = document.getElementById("acc-btn");
     var content = document.getElementById("acc-content");
     if (!btn || !content) return;
+
     btn.addEventListener("click", function () {
       btn.classList.toggle("open");
       content.classList.toggle("open");
@@ -76,8 +98,8 @@
   }
 
   /* ── Counter animasi (IntersectionObserver) ──
-     Jalan di semua halaman yang punya .counter
-     data-counted mencegah duplikasi           ── */
+     Berjalan di semua halaman yang punya .counter
+     data-counted mencegah duplikasi trigger      ── */
   function initCounters() {
     document.querySelectorAll(".counter").forEach(function (el) {
       if (el.dataset.counted) return;
@@ -87,9 +109,11 @@
         function (entries, observer) {
           entries.forEach(function (entry) {
             if (!entry.isIntersecting) return;
+
             var target = +el.dataset.target || 0;
             var step = target / (1500 / 16);
             var cur = 0;
+
             var timer = setInterval(function () {
               cur += step;
               if (cur >= target) {
@@ -99,6 +123,7 @@
                 el.textContent = Math.floor(cur);
               }
             }, 16);
+
             observer.unobserve(el);
           });
         },
@@ -109,9 +134,9 @@
 
   /* ════════════════════════════════════════
      2. JADWAL
-     Requires: assets/data/jadwal.js
-     di-load SEBELUM pages.js
-     Halaman: pages/jadwal.html
+     Requires : assets/data/jadwal.js
+                (di-load SEBELUM pages.js)
+     Halaman  : pages/jadwal.html
      ════════════════════════════════════════ */
 
   var jamMap = {
@@ -124,24 +149,26 @@
 
   var hariList = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
-  /* showJadwal dipanggil oleh onclick di HTML */
+  /* Dipanggil oleh onclick di HTML */
   window.showJadwal = function (kelas) {
-    /* Update tab di hero */
+    /* Update tab aktif di hero */
     document.querySelectorAll(".kelas-tab").forEach(function (t) {
       t.classList.toggle("active", t.dataset.kelas === kelas);
     });
-    /* Update jam-card */
+
+    /* Update jam-card aktif */
     document.querySelectorAll(".jam-card").forEach(function (c) {
       c.classList.toggle("active", c.dataset.kelas === kelas);
     });
-    /* Update header */
+
+    /* Update judul & jam di header tabel */
     var info = jamMap[kelas] || {};
     var title = document.getElementById("jadwal-title");
     var jam = document.getElementById("jadwal-jam");
     if (title) title.textContent = "Jadwal " + (info.label || kelas);
     if (jam) jam.textContent = info.jam || "";
 
-    /* Render tabel */
+    /* Render baris tabel jadwal */
     var data = JADWAL_DATA.semesterGenap[kelas];
     var tbody = document.getElementById("jadwal-tbody");
     if (!tbody) return;
@@ -156,21 +183,29 @@
       .map(function (hari) {
         var materi = data[hari];
         if (!materi || materi.length === 0) return "";
+
         var items = materi
           .map(function (m) {
             return (
-              '<div class="materi-item"><span class="materi-dot"></span><span>' +
+              '<div class="materi-item">' +
+              '<span class="materi-dot"></span>' +
+              "<span>" +
               m +
-              "</span></div>"
+              "</span>" +
+              "</div>"
             );
           })
           .join("");
+
         return (
-          '<tr><td class="td-hari">' +
+          "<tr>" +
+          '<td class="td-hari">' +
           hari +
-          '</td><td><div class="materi-list">' +
+          "</td>" +
+          '<td><div class="materi-list">' +
           items +
-          "</div></td></tr>"
+          "</div></td>" +
+          "</tr>"
         );
       })
       .join("");
@@ -185,11 +220,14 @@
       rBody.innerHTML = JADWAL_DATA.rutinitas
         .map(function (r) {
           return (
-            '<tr><td class="td-hari">' +
+            "<tr>" +
+            '<td class="td-hari">' +
             r.hari +
-            '</td><td class="td-kegiatan">' +
+            "</td>" +
+            '<td class="td-kegiatan">' +
             r.kegiatan +
-            "</td></tr>"
+            "</td>" +
+            "</tr>"
           );
         })
         .join("");
@@ -217,15 +255,15 @@
         .join("");
     }
 
-    /* Default kelas pertama */
+    /* Tampilkan kelas pertama secara default */
     window.showJadwal("A Seluruhnya");
   }
 
   /* ════════════════════════════════════════
      3. TATATERTIB
-     Requires: assets/data/tatatertib.js
-     di-load SEBELUM pages.js
-     Halaman: pages/tatatertib.html
+     Requires : assets/data/tatatertib.js
+                (di-load SEBELUM pages.js)
+     Halaman  : pages/tatatertib.html
      ════════════════════════════════════════ */
 
   var katMeta = {
@@ -262,12 +300,14 @@
     return "poin-low";
   }
 
-  /* showKategori dipanggil oleh onclick di HTML */
+  /* Dipanggil oleh onclick di HTML */
   window.showKategori = function (cat) {
+    /* Update tab aktif */
     document.querySelectorAll(".cat-tab").forEach(function (t) {
       t.classList.toggle("active", t.dataset.cat === cat);
     });
 
+    /* Update judul & deskripsi */
     var meta = katMeta[cat] || {};
     var catTitle = document.getElementById("cat-title");
     var catDesc = document.getElementById("cat-desc");
@@ -275,6 +315,7 @@
     if (catTitle) catTitle.textContent = meta.title || cat;
     if (catDesc) catDesc.textContent = meta.desc || "";
 
+    /* Render tabel pelanggaran */
     var data = TATATERTIB_DATA[cat];
     var tbody = document.getElementById("tt-tbody");
     if (!tbody) return;
@@ -303,7 +344,8 @@
           poinClass(item.poin) +
           '">' +
           item.poin +
-          " poin</span>" +
+          " poin" +
+          "</span>" +
           "</td>" +
           "</tr>"
         );
@@ -320,20 +362,25 @@
       el.innerHTML = TATATERTIB_DATA.catatan
         .map(function (c) {
           return (
-            '<div class="catatan-item"><span class="catatan-dot">•</span><span>' +
+            '<div class="catatan-item">' +
+            '<span class="catatan-dot">•</span>' +
+            "<span>" +
             c +
-            "</span></div>"
+            "</span>" +
+            "</div>"
           );
         })
         .join("");
     }
 
-    /* Default kategori pertama */
+    /* Tampilkan kategori pertama secara default */
     window.showKategori("kedisiplinan");
   }
-/* ════════════════════════════════════════
-     INIT
+
+  /* ════════════════════════════════════════
+     4. INIT
      ════════════════════════════════════════ */
+
   document.addEventListener("DOMContentLoaded", function () {
     initNavbar();
     initMobileMenu();
@@ -341,8 +388,147 @@
     initCounters();
 
     var path = window.location.pathname;
-    if (path.includes("jadwal"))     initJadwal();
+    if (path.includes("jadwal")) initJadwal();
     if (path.includes("tatatertib")) initTatatertib();
-    if (path.includes("tentang"))    initTentang();
+    if (path.includes("tentang")) initTentang();
   });
 })();
+
+// =====================
+// Daftar
+// =====================
+
+/* ── Step Navigation ── */
+      var currentStep = 1;
+
+      function showStep(n) {
+        for (var i = 1; i <= 4; i++) {
+          var el = document.getElementById('step-' + i);
+          if (el) el.classList.add('hidden');
+        }
+        var target = document.getElementById('step-' + n);
+        if (target) target.classList.remove('hidden');
+
+        // Update step indicators
+        for (var j = 1; j <= 3; j++) {
+          var ind = document.getElementById('step-ind-' + j);
+          if (!ind) continue;
+          ind.classList.remove('active', 'done');
+          if (j < n) ind.classList.add('done');
+          else if (j === n) ind.classList.add('active');
+        }
+
+        // Update step lines
+        var lines = document.querySelectorAll('.step-line');
+        lines.forEach(function(line, idx) {
+          line.classList.toggle('done', idx < n - 1);
+        });
+
+        currentStep = n;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function nextStep(n) {
+        if (n === 2 && !validateStep1()) return;
+        if (n === 3 && !validateStep2()) return;
+        if (n === 3) buildPreview();
+        showStep(n);
+      }
+
+      function prevStep(n) {
+        showStep(n);
+      }
+
+      /* ── Validasi ── */
+      function validateStep1() {
+        var nama  = document.getElementById('inp-nama').value.trim();
+        var umur  = document.getElementById('inp-umur').value.trim();
+        var jk    = document.getElementById('inp-jk').value;
+        var kelas = document.getElementById('inp-kelas').value;
+        var err   = document.getElementById('error-1');
+
+        if (!nama || !umur || !jk || !kelas) {
+          err.classList.remove('hidden');
+          return false;
+        }
+        err.classList.add('hidden');
+        return true;
+      }
+
+      function validateStep2() {
+        var ortu = document.getElementById('inp-ortu').value.trim();
+        var wa   = document.getElementById('inp-wa').value.trim();
+        var err  = document.getElementById('error-2');
+
+        if (!ortu || !wa) {
+          err.classList.remove('hidden');
+          return false;
+        }
+        var noWa = wa.replace(/\D/g, '');
+        if (noWa.length < 8) {
+          err.textContent = '⚠️ Nomor WhatsApp tidak valid, minimal 8 digit.';
+          err.classList.remove('hidden');
+          return false;
+        }
+        err.classList.add('hidden');
+        return true;
+      }
+
+      /* ── Build Preview ── */
+      function buildPreview() {
+        var set = function(id, val) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = val || '—';
+        };
+        set('prev-nama',       document.getElementById('inp-nama').value.trim());
+        set('prev-umur',       document.getElementById('inp-umur').value + ' tahun');
+        set('prev-jk',         document.getElementById('inp-jk').value);
+        set('prev-kelas',      document.getElementById('inp-kelas').value);
+        set('prev-pengalaman', document.getElementById('inp-pengalaman').value);
+        set('prev-sekolah',    document.getElementById('inp-sekolah').value.trim() || 'Tidak diisi');
+        set('prev-ortu',       document.getElementById('inp-ortu').value.trim());
+        set('prev-wa',         '+62' + document.getElementById('inp-wa').value.trim().replace(/\D/g,'').replace(/^0/,''));
+        set('prev-alamat',     document.getElementById('inp-alamat').value.trim() || 'Tidak diisi');
+        set('prev-catatan',    document.getElementById('inp-catatan').value.trim() || 'Tidak ada');
+      }
+
+      /* ── Kirim WhatsApp ── */
+      function kirimWhatsApp() {
+        var nama       = document.getElementById('inp-nama').value.trim();
+        var umur       = document.getElementById('inp-umur').value.trim();
+        var jk         = document.getElementById('inp-jk').value;
+        var kelas      = document.getElementById('inp-kelas').value;
+        var pengalaman = document.getElementById('inp-pengalaman').value;
+        var sekolah    = document.getElementById('inp-sekolah').value.trim();
+        var ortu       = document.getElementById('inp-ortu').value.trim();
+        var wa         = document.getElementById('inp-wa').value.trim().replace(/\D/g,'').replace(/^0/,'');
+        var alamat     = document.getElementById('inp-alamat').value.trim();
+        var catatan    = document.getElementById('inp-catatan').value.trim();
+
+        var pesan =
+'*PENDAFTARAN SANTRI BARU*\n' +
+'TPQ Akhlaqul Qurro\n\n' +
+'📋 *Data Santri*\n' +
+'• Nama Santri     : ' + nama + '\n' +
+'• Umur            : ' + umur + ' tahun\n' +
+'• Jenis Kelamin   : ' + jk + '\n' +
+'• Kelas / Tingkat : ' + kelas + '\n' +
+'• Pengalaman      : ' + pengalaman + '\n' +
+(sekolah ? '• Asal Sekolah    : ' + sekolah + '\n' : '') +
+'\n👨‍👩‍👧 *Data Orang Tua / Wali*\n' +
+'• Nama            : ' + ortu + '\n' +
+'• No. WhatsApp    : +62' + wa + '\n' +
+(alamat ? '• Alamat          : ' + alamat + '\n' : '') +
+(catatan ? '\n📝 *Catatan*\n' + catatan + '\n' : '') +
+'\n_Dikirim melalui website TPQ Akhlaqul Qurro_';
+
+        var url = 'https://wa.me/62895425173700?text=' + encodeURIComponent(pesan);
+
+        // Tampilkan sukses
+        showStep(4);
+
+        // Buka WA setelah 800ms
+        setTimeout(function() {
+          window.open(url, '_blank');
+        }, 800);
+      }
