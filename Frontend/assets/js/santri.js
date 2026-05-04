@@ -2,7 +2,7 @@
 // KONEKSI SUPABASE - TPQ Akhlaqul Qurro
 // ============================================
 
-const SUPABASE_URL = "https://bsuozoqhrtkdehvjppdi.supabase.co";
+const SUPABASE_URL = "https://bsuozojhtrkdehvjppdi.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzdW96b3FocnRrZGVodmpwcGRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NzYzMDMsImV4cCI6MjA5MzI1MjMwM30.9AJshPyN4n3kED7aDaJGCkYLAx7txFaRiOSpyRm-ouk";
 
