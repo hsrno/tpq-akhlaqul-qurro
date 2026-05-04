@@ -116,7 +116,7 @@ async function loginSantri(nis, password) {
   try {
     const { data, error } = await window.supabaseClient
       .from("santri")
-      .select("id, nis, nama_lengkap, kelas, tingkat, status, password")
+      .select("id, nis, nama_lengkap, kelas, tingkat, status")
       .eq("nis", nis.toUpperCase()) // NIS diubah uppercase agar tidak case-sensitive
       .single();
 
