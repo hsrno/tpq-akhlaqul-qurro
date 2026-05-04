@@ -1,67 +1,57 @@
 /* ════════════════════════════════════════
-   TPQ AKHLAQUL QURRO' — Auth Guard
-   assets/js/auth-guard.js
-
-   CARA PAKAI di setiap dashboard:
-   <script src="../assets/js/auth-guard.js"></script>
-   Letakkan paling PERTAMA sebelum script lain.
-
-   Otomatis redirect ke login jika tidak ada session.
-   Set window.REQUIRED_ROLE = 'santri' atau 'ortu'
-   sebelum load script ini untuk validasi role.
+   TPQ AKHLAQUL QURRO' — auth-guard.js
+   Taruh di: Frontend/assets/js/auth-guard.js
+   Load PERTAMA sebelum script lain di setiap dashboard
    ════════════════════════════════════════ */
 
 (function () {
   "use strict";
 
-  const SESSION_KEY = "tpq_session";
+  var user = null;
 
-  function getSession() {
-    try {
-      return JSON.parse(localStorage.getItem(SESSION_KEY));
-    } catch {
-      return null;
-    }
+  try {
+    var raw = localStorage.getItem("user");
+    if (raw) user = JSON.parse(raw);
+  } catch (e) {
+    console.error("auth-guard: gagal parse user dari localStorage", e);
   }
 
-  function clearSession() {
-    localStorage.removeItem(SESSION_KEY);
+  // Tentukan halaman saat ini
+  var path = window.location.pathname;
+  var isSantriDash =
+    path.includes("dashboard-santri") || path.includes("santri/dashboard");
+  var isOrtuDash =
+    path.includes("dashboard-ortu") || path.includes("ortu/dashboard");
+
+  // Kalau belum login → redirect ke login
+  if (!user) {
+    window.location.replace("../login.html");
+    return; // stop eksekusi script lain
   }
 
-  const session = getSession();
-
-  // Tidak ada session → redirect login
-  if (!session || !session.role) {
-    window.location.replace("./login.html");
-    throw new Error("Unauthorized");
+  // Kalau role tidak sesuai halaman → redirect ke login
+  if (isSantriDash && user.role !== "santri") {
+    window.location.replace("../login.html");
+    return;
+  }
+  if (isOrtuDash && user.role !== "ortu") {
+    window.location.replace("../login.html");
+    return;
   }
 
-  // Validasi role (jika REQUIRED_ROLE sudah diset)
-  const required = window.REQUIRED_ROLE;
-  if (required && session.role !== required) {
-    // Role salah → redirect ke dashboard yang sesuai
-    if (session.role === "santri") {
-      window.location.replace("./dashboard-santri.html");
-    } else {
-      window.location.replace("./dashboard-ortu.html");
-    }
-    throw new Error("Wrong role");
-  }
+  // Expose user ke global supaya script lain bisa pakai
+  window.tpqUser = user;
 
-  // Expose session globally
-  window.TPQSession = {
-    get: function () {
-      return getSession();
-    },
-    clear: function () {
-      clearSession();
-      window.location.replace("./login.html");
-    },
-    logout: function () {
-      clearSession();
-      window.location.replace("./login.html");
-    },
+  // Fungsi logout global
+  window.logout = function () {
+    localStorage.removeItem("user");
+    window.location.replace("../login.html");
   };
 
-  window.TPQ_CURRENT_USER = session;
+  console.log(
+    "✅ auth-guard: login sebagai",
+    user.role,
+    "-",
+    user.nama_lengkap || user.nama_ortu,
+  );
 })();

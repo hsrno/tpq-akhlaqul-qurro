@@ -1,189 +1,386 @@
 /* ════════════════════════════════════════
-   TPQ AKHLAQUL QURRO' — Dashboard Ortu JS
-   Halaman: dashboard-ortu.html
+   TPQ AKHLAQUL QURRO' — Dashboard Santri JS
+   Halaman: dashboard-santri.html
+   Data dari: localStorage (user) + Supabase (absensi, nilai, catatan)
    ════════════════════════════════════════ */
 
-   
 (function () {
   "use strict";
 
   /* ══════════════════════════════════════
-     DUMMY DATA — Ganti dengan API backend
+     DATA USER DARI LOCALSTORAGE
   ══════════════════════════════════════ */
-  const ortuData = {
-    nama: "Bapak Hasan",
-    noHp: "081234567890",
-    foto: "BH",
-
-    // Data anak-anak (bisa lebih dari 1)
-    anak: [
-      {
-        id: 1,
-        nama: "Ahmad Fauzi",
-        nis: "2024001",
-        kelas: "Kelas B",
-        avatar: "AF",
-        ustadz: "Ust. Mahmud",
-        iqraLevel: 4,
-        iqraProgress: 65,
-        juzSudah: 2,
-        surahHafal: 8,
-        statsHadir: 18,
-        statsTotalPertemuan: 22,
-        statsNilai: 87,
-        statsRanking: 3,
-        absensi: [
-          "H",
-          "H",
-          "H",
-          "A",
-          "H",
-          "H",
-          "H",
-          "H",
-          "I",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "A",
-          "H",
-          "H",
-          "H",
-          "H",
-          "T",
-          "F",
-          "F",
-          "F",
-          "F",
-          "F",
-          "F",
-        ],
-        nilai: [
-          { mapel: "Tajwid", nilai: 90, grade: "A", ket: "Sangat Baik" },
-          { mapel: "Hafalan Surah", nilai: 85, grade: "B", ket: "Baik" },
-          { mapel: "Akidah", nilai: 88, grade: "A", ket: "Sangat Baik" },
-          { mapel: "Fiqih Ibadah", nilai: 82, grade: "B", ket: "Baik" },
-          { mapel: "Akhlak", nilai: 92, grade: "A", ket: "Sangat Baik" },
-        ],
-        catatan: [
-          {
-            tanggal: "20 Mar 2026",
-            isi: "Ahmad sudah menunjukkan peningkatan yang signifikan dalam bacaan tajwid. Terus semangat belajar!",
-            ustadz: "Ust. Mahmud",
-          },
-          {
-            tanggal: "15 Mar 2026",
-            isi: "Hafalan surah Al-Mulk sudah lancar. Minggu depan lanjut ke surah Al-Qalam.",
-            ustadz: "Ust. Mahmud",
-          },
-          {
-            tanggal: "8 Mar 2026",
-            isi: "Perlu lebih memperhatikan panjang pendek bacaan Mad. Mohon dilatih di rumah.",
-            ustadz: "Ust. Mahmud",
-          },
-        ],
-      },
-      {
-        id: 2,
-        nama: "Siti Aisyah",
-        nis: "2024015",
-        kelas: "Kelas A",
-        avatar: "SA",
-        ustadz: "Ust. Fatimah",
-        iqraLevel: 2,
-        iqraProgress: 80,
-        juzSudah: 0,
-        surahHafal: 4,
-        statsHadir: 20,
-        statsTotalPertemuan: 22,
-        statsNilai: 91,
-        statsRanking: 1,
-        absensi: [
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "H",
-          "T",
-          "F",
-          "F",
-          "F",
-          "F",
-          "F",
-          "F",
-        ],
-        nilai: [
-          { mapel: "Tajwid", nilai: 95, grade: "A", ket: "Sangat Baik" },
-          { mapel: "Hafalan Surah", nilai: 90, grade: "A", ket: "Sangat Baik" },
-          { mapel: "Akidah", nilai: 88, grade: "A", ket: "Sangat Baik" },
-          { mapel: "Fiqih Ibadah", nilai: 85, grade: "B", ket: "Baik" },
-          { mapel: "Akhlak", nilai: 96, grade: "A", ket: "Sangat Baik" },
-        ],
-        catatan: [
-          {
-            tanggal: "21 Mar 2026",
-            isi: "Siti sangat rajin dan disiplin. Hafalannya meningkat pesat. Orang tua perlu terus mendukung di rumah.",
-            ustadz: "Ust. Fatimah",
-          },
-          {
-            tanggal: "12 Mar 2026",
-            isi: "Surah Al-Kafirun sudah hampir hafal. Tinggal kelancaran saja.",
-            ustadz: "Ust. Fatimah",
-          },
-        ],
-      },
-    ],
-  };
+  var user = window.tpqUser || {};
+  var santriId = user.id || null;
 
   /* ══════════════════════════════════════
-     STATE
+     HELPER: GRADE DARI NILAI
   ══════════════════════════════════════ */
-  let activeAnakId = ortuData.anak[0].id;
-
-  function getActiveAnak() {
-    return ortuData.anak.find((a) => a.id === activeAnakId);
+  function getGrade(n) {
+    if (n >= 90) return { grade: "A", ket: "Sangat Baik" };
+    if (n >= 80) return { grade: "B", ket: "Baik" };
+    if (n >= 70) return { grade: "C", ket: "Cukup" };
+    if (n >= 60) return { grade: "D", ket: "Perlu Perbaikan" };
+    return { grade: "E", ket: "Kurang" };
   }
 
   /* ══════════════════════════════════════
-     SIDEBAR TOGGLE
+     HELPER: DETEKSI JADWAL DARI KELAS
+  ══════════════════════════════════════ */
+  var HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
+  function getTingkatan(kelas) {
+    if (!kelas || typeof JADWAL_DATA === "undefined") return null;
+    var k = kelas.toString().trim();
+    if (/tahfidz/i.test(k)) return "Tahfidz 1";
+    if (/qur.?an/i.test(k)) return "Qur'an 1 & 2";
+    if (/^b/i.test(k)) return "B Seluruhnya";
+    if (/^a/i.test(k)) return "A Seluruhnya";
+    return null;
+  }
+
+  /* ══════════════════════════════════════
+     FETCH: ABSENSI BULAN INI
+  ══════════════════════════════════════ */
+  async function fetchAbsensi() {
+    if (!window.supabaseClient || !santriId) return [];
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, "0");
+    var dari = year + "-" + month + "-01";
+    var sampai = year + "-" + month + "-31";
+
+    var { data, error } = await window.supabaseClient
+      .from("absensi")
+      .select("tanggal, status")
+      .eq("santri_id", santriId)
+      .gte("tanggal", dari)
+      .lte("tanggal", sampai)
+      .order("tanggal", { ascending: true });
+
+    if (error) {
+      console.error("fetchAbsensi:", error);
+      return [];
+    }
+    return data || [];
+  }
+
+  /* ══════════════════════════════════════
+     FETCH: NILAI
+  ══════════════════════════════════════ */
+  async function fetchNilai() {
+    if (!window.supabaseClient || !santriId) return [];
+
+    var { data, error } = await window.supabaseClient
+      .from("nilai")
+      .select("mapel, nilai, semester")
+      .eq("santri_id", santriId)
+      .order("mapel", { ascending: true });
+
+    if (error) {
+      console.error("fetchNilai:", error);
+      return [];
+    }
+    return data || [];
+  }
+
+  /* ══════════════════════════════════════
+     FETCH: CATATAN USTADZ
+  ══════════════════════════════════════ */
+  async function fetchCatatan() {
+    if (!window.supabaseClient || !santriId) return [];
+
+    var { data, error } = await window.supabaseClient
+      .from("catatan")
+      .select("isi, ustadz, tanggal")
+      .eq("santri_id", santriId)
+      .order("tanggal", { ascending: false })
+      .limit(10);
+
+    if (error) {
+      console.error("fetchCatatan:", error);
+      return [];
+    }
+    return data || [];
+  }
+
+  /* ══════════════════════════════════════
+     RENDER: INFO DASAR SANTRI
+  ══════════════════════════════════════ */
+  function renderUserInfo() {
+    var nama = user.nama_lengkap || "Santri";
+    var nis = user.nis || "-";
+    var kelas = user.kelas ? "Kelas " + user.kelas : "-";
+    var inisial = nama
+      .split(" ")
+      .slice(0, 2)
+      .map(function (w) {
+        return w[0];
+      })
+      .join("")
+      .toUpperCase();
+
+    setText("user-nama", nama);
+    setText("user-nis", "NIS: " + nis);
+    setText("user-kelas", kelas);
+    setText("avatar-text", inisial);
+    setText("topbar-nama", nama.split(" ")[0]);
+    setText("banner-nama", "Halo, " + nama + "!");
+  }
+
+  /* ══════════════════════════════════════
+     RENDER: ABSENSI — KALENDER BULAN INI
+  ══════════════════════════════════════ */
+  function renderAbsensi(data) {
+    var hadir = data.filter(function (d) {
+      return d.status === "hadir";
+    }).length;
+    var absen = data.filter(function (d) {
+      return d.status === "absen";
+    }).length;
+    var izin = data.filter(function (d) {
+      return d.status === "izin";
+    }).length;
+    var total = hadir + absen + izin;
+    var pct = total > 0 ? Math.round((hadir / total) * 100) : 0;
+
+    setText("stat-hadir", hadir + " Hari");
+    setText("pct-hadir", pct + "%");
+    setText("pct-hadir-2", pct + "%");
+    setWidth("bar-hadir", pct + "%");
+
+    // Build kalender
+    var now = new Date();
+    var tahun = now.getFullYear();
+    var bulan = now.getMonth();
+    var hariIniStr = now.toISOString().slice(0, 10);
+    var totalHari = new Date(tahun, bulan + 1, 0).getDate();
+    var hariPertama = new Date(tahun, bulan, 1).getDay();
+
+    var statusMap = {};
+    data.forEach(function (d) {
+      statusMap[d.tanggal] = d.status;
+    });
+
+    var classMap = { hadir: "hadir", absen: "absen", izin: "izin" };
+    var labelMap = { hadir: "✓", absen: "✗", izin: "I" };
+    var days = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+
+    var html = days
+      .map(function (d) {
+        return (
+          '<div class="attend-day" style="background:transparent;color:#9ca3af;font-size:.65rem;font-weight:700;">' +
+          d +
+          "</div>"
+        );
+      })
+      .join("");
+
+    for (var i = 0; i < hariPertama; i++) {
+      html += '<div class="attend-day future"></div>';
+    }
+
+    for (var tgl = 1; tgl <= totalHari; tgl++) {
+      var tglStr =
+        tahun +
+        "-" +
+        String(bulan + 1).padStart(2, "0") +
+        "-" +
+        String(tgl).padStart(2, "0");
+      var isToday = tglStr === hariIniStr;
+      var isFuture = tglStr > hariIniStr;
+      var status = statusMap[tglStr];
+      var cls, lbl;
+
+      if (isToday) {
+        cls = status ? classMap[status] : "today";
+        lbl = status ? labelMap[status] : "●";
+      } else if (isFuture) {
+        cls = "future";
+        lbl = "";
+      } else {
+        cls = status ? classMap[status] : "future";
+        lbl = status ? labelMap[status] : tgl;
+      }
+
+      html +=
+        '<div class="attend-day ' +
+        cls +
+        '" title="' +
+        tglStr +
+        '">' +
+        lbl +
+        "</div>";
+    }
+
+    ["absensi-grid", "absensi-grid-2"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    });
+  }
+
+  /* ══════════════════════════════════════
+     RENDER: NILAI
+  ══════════════════════════════════════ */
+  function renderNilai(data) {
+    var tbody = document.getElementById("nilai-tbody");
+    if (!tbody) return;
+
+    if (data.length === 0) {
+      tbody.innerHTML =
+        '<tr><td colspan="4" class="text-center text-gray-400 py-4">Belum ada data nilai</td></tr>';
+      return;
+    }
+
+    var rata = Math.round(
+      data.reduce(function (sum, d) {
+        return sum + Number(d.nilai);
+      }, 0) / data.length,
+    );
+    setText("stat-nilai", rata);
+
+    tbody.innerHTML = data
+      .map(function (item) {
+        var g = getGrade(Number(item.nilai));
+        return (
+          "<tr>" +
+          '<td class="font-medium">' +
+          item.mapel +
+          "</td>" +
+          "<td><strong>" +
+          item.nilai +
+          "</strong></td>" +
+          '<td><span class="nilai-pill nilai-' +
+          g.grade +
+          '">' +
+          g.grade +
+          "</span></td>" +
+          '<td class="text-gray-500">' +
+          g.ket +
+          "</td>" +
+          "</tr>"
+        );
+      })
+      .join("");
+  }
+
+  /* ══════════════════════════════════════
+     RENDER: CATATAN USTADZ
+  ══════════════════════════════════════ */
+  function renderCatatan(data) {
+    var html =
+      data.length === 0
+        ? '<p class="text-sm text-gray-400">Belum ada catatan dari ustadz.</p>'
+        : data
+            .map(function (item) {
+              var tgl = new Date(item.tanggal).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              });
+              return (
+                '<div class="catatan-item">' +
+                '<p class="catatan-date">' +
+                tgl +
+                "</p>" +
+                '<p class="catatan-text">' +
+                item.isi +
+                "</p>" +
+                '<p class="catatan-ustadz">— ' +
+                item.ustadz +
+                "</p>" +
+                "</div>"
+              );
+            })
+            .join("");
+
+    ["catatan-list", "catatan-list-full"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    });
+
+    if (data.length > 0) setText("nama-ustadz", data[0].ustadz);
+  }
+
+  /* ══════════════════════════════════════
+     RENDER: JADWAL HARI INI (dari jadwal.js)
+  ══════════════════════════════════════ */
+  function renderJadwalHariIni() {
+    var el = document.getElementById("jadwal-hari-ini");
+    if (!el || typeof JADWAL_DATA === "undefined") return;
+
+    var hariNama = HARI[new Date().getDay()];
+    var tingkat = getTingkatan(user.kelas);
+
+    if (
+      !tingkat ||
+      !JADWAL_DATA.semesterGenap[tingkat] ||
+      !JADWAL_DATA.semesterGenap[tingkat][hariNama]
+    ) {
+      el.innerHTML =
+        '<p class="text-sm text-gray-400">Tidak ada jadwal hari ini.</p>';
+      return;
+    }
+
+    var jadwal = JADWAL_DATA.semesterGenap[tingkat][hariNama];
+    var rutinitas = JADWAL_DATA.rutinitas.find(function (r) {
+      return r.hari === hariNama;
+    });
+    var html = "";
+
+    if (rutinitas) {
+      html +=
+        '<div class="catatan-item mb-2"><p class="catatan-date">Rutinitas</p><p class="catatan-text">📖 ' +
+        rutinitas.kegiatan +
+        "</p></div>";
+    }
+
+    jadwal.forEach(function (item, i) {
+      html +=
+        '<div class="flex items-center gap-2 py-2 border-b border-gray-100 last:border-0">' +
+        '<span class="text-xs font-bold text-white px-2 py-0.5 rounded-full" style="background:var(--grad-main)">' +
+        (i + 1) +
+        "</span>" +
+        '<span class="text-sm">' +
+        item +
+        "</span>" +
+        "</div>";
+    });
+
+    el.innerHTML = html;
+    if (user.jam_belajar) setText("jam-belajar", user.jam_belajar);
+  }
+
+  /* ══════════════════════════════════════
+     ANIMATE BARS
+  ══════════════════════════════════════ */
+  function animateBars() {
+    document.querySelectorAll(".progress-fill").forEach(function (bar) {
+      var target = bar.style.width;
+      bar.style.width = "0%";
+      setTimeout(function () {
+        bar.style.width = target;
+      }, 300);
+    });
+  }
+
+  /* ══════════════════════════════════════
+     SIDEBAR & NAV
   ══════════════════════════════════════ */
   function initSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
-    const hamburger = document.getElementById("hamburger");
+    var sidebar = document.getElementById("sidebar");
+    var overlay = document.getElementById("sidebar-overlay");
+    var hamburger = document.getElementById("hamburger");
     if (!sidebar || !hamburger) return;
 
     hamburger.addEventListener("click", function () {
       if (window.innerWidth < 768) {
         sidebar.classList.toggle("mobile-open");
-        overlay.classList.toggle("show");
+        if (overlay) overlay.classList.toggle("show");
       } else {
         sidebar.classList.toggle("collapsed");
-        document.getElementById("main-content").classList.toggle("expanded");
+        var mc = document.getElementById("main-content");
+        if (mc) mc.classList.toggle("expanded");
       }
     });
 
@@ -195,284 +392,73 @@
     }
   }
 
-  /* ══════════════════════════════════════
-     NAV SECTIONS
-  ══════════════════════════════════════ */
   function initNav() {
     document
       .querySelectorAll(".nav-item[data-section]")
       .forEach(function (item) {
         item.addEventListener("click", function () {
-          document
-            .querySelectorAll(".nav-item")
-            .forEach((n) => n.classList.remove("active"));
+          document.querySelectorAll(".nav-item").forEach(function (n) {
+            n.classList.remove("active");
+          });
           this.classList.add("active");
           showSection(this.dataset.section);
           if (window.innerWidth < 768) {
             document.getElementById("sidebar").classList.remove("mobile-open");
-            document.getElementById("sidebar-overlay").classList.remove("show");
+            var ov = document.getElementById("sidebar-overlay");
+            if (ov) ov.classList.remove("show");
           }
         });
       });
   }
 
   function showSection(name) {
-    document
-      .querySelectorAll(".dash-section")
-      .forEach((s) => s.classList.add("hidden"));
-    const el = document.getElementById("section-" + name);
-    if (el) el.classList.remove("hidden");
+    document.querySelectorAll(".dash-section").forEach(function (s) {
+      s.classList.add("hidden");
+    });
+    var target = document.getElementById("section-" + name);
+    if (target) target.classList.remove("hidden");
   }
 
   /* ══════════════════════════════════════
-     CHILD SELECTOR
+     HELPER DOM
   ══════════════════════════════════════ */
-  function renderChildSelector() {
-    const container = document.getElementById("child-selector");
-    if (!container) return;
-
-    container.innerHTML = ortuData.anak
-      .map(function (anak) {
-        const isActive = anak.id === activeAnakId;
-        return (
-          '<button class="child-card ' +
-          (isActive ? "active" : "") +
-          '" onclick="selectAnak(' +
-          anak.id +
-          ')">' +
-          '<div class="child-avatar">' +
-          anak.avatar +
-          "</div>" +
-          "<div>" +
-          '<p class="text-sm font-semibold text-navy">' +
-          anak.nama +
-          "</p>" +
-          '<p class="text-xs text-gray-500">' +
-          anak.kelas +
-          "</p>" +
-          "</div>" +
-          "</button>"
-        );
-      })
-      .join("");
-  }
-
-  window.selectAnak = function (id) {
-    activeAnakId = id;
-    renderChildSelector();
-    populateData();
-    animateBars();
-  };
-
-  /* ══════════════════════════════════════
-     POPULATE DATA
-  ══════════════════════════════════════ */
-  function populateData() {
-    const d = getActiveAnak();
-    if (!d) return;
-
-    // Ortu info (sidebar)
-    setText("ortu-nama", ortuData.nama);
-    setText("ortu-hp", "HP: " + ortuData.noHp);
-    setText("avatar-text", ortuData.foto);
-
-    // Topbar
-    setText("topbar-nama", ortuData.nama.split(" ").slice(-1)[0]);
-
-    // Anak aktif info
-    setText("anak-nama", d.nama);
-    setText("anak-kelas", d.kelas);
-    setText("anak-nis", "NIS: " + d.nis);
-    setText("anak-ustadz", "Ustadz: " + d.ustadz);
-    setText("banner-nama", d.nama);
-
-    // Stats
-    const pctHadir = Math.round((d.statsHadir / d.statsTotalPertemuan) * 100);
-    setText("stat-hadir", d.statsHadir + " Hari");
-    setText("stat-pct", pctHadir + "%");
-    setText("stat-nilai", d.statsNilai);
-    setText("stat-ranking", "#" + d.statsRanking);
-    setText("stat-surah", d.surahHafal + " Surah");
-    setText("pct-hadir", pctHadir + "%");
-
-    // Progress
-    setText("iqra-level-text", "Iqra' Jilid " + d.iqraLevel);
-    setText("iqra-pct-text", d.iqraProgress + "%");
-    setWidth("iqra-bar", d.iqraProgress + "%");
-
-    const juzPct = Math.round((d.juzSudah / 30) * 100);
-    setText("juz-text", d.juzSudah + " dari 30 juz");
-    setWidth("juz-bar", juzPct + "%");
-    setWidth("bar-hadir", pctHadir + "%");
-
-    // Absensi
-    renderAbsensi(d.absensi, "absensi-grid");
-    renderAbsensi(d.absensi, "absensi-grid-full");
-
-    // Absensi rekap
-    const hadir = d.absensi.filter((s) => s === "H" || s === "T").length;
-    const absen = d.absensi.filter((s) => s === "A").length;
-    const izin = d.absensi.filter((s) => s === "I").length;
-    setText("rekap-hadir", hadir);
-    setText("rekap-absen", absen);
-    setText("rekap-izin", izin);
-
-    // Nilai
-    renderNilai(d.nilai);
-
-    // Catatan
-    renderCatatan(d.catatan, "catatan-list");
-    renderCatatan(d.catatan, "catatan-list-full");
-    setText("nama-ustadz", d.ustadz);
-  }
-
   function setText(id, val) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) el.textContent = val;
   }
 
   function setWidth(id, val) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) el.style.width = val;
   }
-
-  /* ── Absensi Grid ── */
-  function renderAbsensi(data, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
-    let html = days
-      .map(
-        (d) =>
-          '<div class="attend-day" style="background:transparent;color:#9ca3af;font-size:.65rem;font-weight:700;">' +
-          d +
-          "</div>",
-      )
-      .join("");
-    const classMap = {
-      H: "hadir",
-      A: "absen",
-      I: "izin",
-      F: "future",
-      T: "today",
-    };
-    const labelMap = { H: "✓", A: "✗", I: "I", F: "", T: "✓" };
-    data.forEach(function (s) {
-      html +=
-        '<div class="attend-day ' +
-        (classMap[s] || "future") +
-        '">' +
-        (labelMap[s] || "") +
-        "</div>";
-    });
-    container.innerHTML = html;
-  }
-
-  /* ── Nilai ── */
-  function renderNilai(data) {
-    const tbody = document.getElementById("nilai-tbody");
-    if (!tbody) return;
-    tbody.innerHTML = data
-      .map(function (item) {
-        return (
-          "<tr>" +
-          '<td class="font-medium">' +
-          item.mapel +
-          "</td>" +
-          "<td><strong>" +
-          item.nilai +
-          "</strong></td>" +
-          '<td><span class="nilai-pill nilai-' +
-          item.grade +
-          '">' +
-          item.grade +
-          "</span></td>" +
-          '<td class="text-gray-500">' +
-          item.ket +
-          "</td>" +
-          "</tr>"
-        );
-      })
-      .join("");
-  }
-
-  /* ── Catatan ── */
-  function renderCatatan(data, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = data
-      .map(function (item) {
-        return (
-          '<div class="catatan-item">' +
-          '<p class="catatan-date">' +
-          item.tanggal +
-          "</p>" +
-          '<p class="catatan-text">' +
-          item.isi +
-          "</p>" +
-          '<p class="catatan-ustadz">— ' +
-          item.ustadz +
-          "</p>" +
-          "</div>"
-        );
-      })
-      .join("");
-  }
-
-  /* ══════════════════════════════════════
-     KIRIM PESAN KE USTADZ
-  ══════════════════════════════════════ */
-  window.kirimPesan = function () {
-    const input = document.getElementById("msg-input");
-    if (!input) return;
-    const msg = input.value.trim();
-    if (!msg) return;
-
-    const d = getActiveAnak();
-    const waMsg = encodeURIComponent(
-      "Assalamu'alaikum Ust. " +
-        d.ustadz.replace("Ust. ", "") +
-        ", saya orang tua dari " +
-        d.nama +
-        " (NIS: " +
-        d.nis +
-        ").\n\n" +
-        msg,
-    );
-    window.open("https://wa.me/6281234567890?text=" + waMsg, "_blank");
-    input.value = "";
-  };
-
-  /* ══════════════════════════════════════
-     ANIMATE BARS
-  ══════════════════════════════════════ */
-  function animateBars() {
-    document.querySelectorAll(".progress-fill").forEach(function (bar) {
-      const target = bar.style.width;
-      bar.style.width = "0%";
-      setTimeout(function () {
-        bar.style.width = target;
-      }, 300);
-    });
-  }
-
-  /* ══════════════════════════════════════
-     LOGOUT
-  ══════════════════════════════════════ */
-  window.logout = function () {
-    sessionStorage.removeItem("tpq_role");
-    sessionStorage.removeItem("tpq_id");
-    window.location.href = "./santri.html";
-  };
 
   /* ══════════════════════════════════════
      INIT
   ══════════════════════════════════════ */
-  document.addEventListener("DOMContentLoaded", function () {
-    renderChildSelector();
-    populateData();
+  document.addEventListener("DOMContentLoaded", async function () {
+    renderUserInfo();
     initSidebar();
     initNav();
-    setTimeout(animateBars, 400);
+    renderJadwalHariIni();
+
+    if (!santriId) {
+      console.warn("Tidak ada santri_id — data Supabase tidak diload");
+      return;
+    }
+
+    try {
+      var [absensi, nilaiData, catatan] = await Promise.all([
+        fetchAbsensi(),
+        fetchNilai(),
+        fetchCatatan(),
+      ]);
+
+      renderAbsensi(absensi);
+      renderNilai(nilaiData);
+      renderCatatan(catatan);
+      setTimeout(animateBars, 400);
+    } catch (err) {
+      console.error("Error load dashboard santri:", err);
+    }
   });
 })();

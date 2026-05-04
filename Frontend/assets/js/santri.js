@@ -289,5 +289,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
-console.log("✅ santri.js loaded — Supabase dari file lokal.");
