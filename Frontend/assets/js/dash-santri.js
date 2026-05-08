@@ -439,8 +439,9 @@
     renderUserInfo();
     initSidebar();
     initNav();
+    initNotifModal();
     renderJadwalHariIni();
-
+    initLogoutModal();
     if (!santriId) {
       console.warn("Tidak ada santri_id — data Supabase tidak diload");
       return;
@@ -461,4 +462,147 @@
       console.error("Error load dashboard santri:", err);
     }
   });
+
+  /* ══════════════════════════════════════
+     SIDEBAR COLLAPSE (DESKTOP)
+  ══════════════════════════════════════ */
+  function initSidebar() {
+    var sidebar = document.getElementById("sidebar");
+    var overlay = document.getElementById("sidebar-overlay");
+    var hamburger = document.getElementById("hamburger");
+    var mainContent = document.getElementById("main-content");
+    if (!sidebar || !hamburger) return;
+
+    hamburger.addEventListener("click", function () {
+      if (window.innerWidth < 768) {
+        /* Mobile: slide in/out */
+        sidebar.classList.toggle("mobile-open");
+        if (overlay) overlay.classList.toggle("show");
+      } else {
+        /* Desktop: collapse to icon-only */
+        sidebar.classList.toggle("collapsed");
+        if (mainContent) mainContent.classList.toggle("expanded");
+      }
+    });
+
+    if (overlay) {
+      overlay.addEventListener("click", function () {
+        sidebar.classList.remove("mobile-open");
+        overlay.classList.remove("show");
+      });
+    }
+
+    /* Auto-hide mobile sidebar saat layar melebar */
+    var mq = window.matchMedia("(min-width: 768px)");
+    mq.addEventListener("change", function (e) {
+      if (e.matches) {
+        sidebar.classList.remove("mobile-open");
+        if (overlay) overlay.classList.remove("show");
+      }
+    });
+  }
+
+  /* ══════════════════════════════════════
+     NAVIGASI MENU SIDEBAR
+  ══════════════════════════════════════ */
+  function initNav() {
+    document
+      .querySelectorAll(".nav-item[data-section]")
+      .forEach(function (item) {
+        item.addEventListener("click", function () {
+          /* Hapus active semua */
+          document.querySelectorAll(".nav-item").forEach(function (n) {
+            n.classList.remove("active");
+          });
+          this.classList.add("active");
+          showSection(this.dataset.section);
+
+          /* Tutup mobile sidebar setelah pilih menu */
+          if (window.innerWidth < 768) {
+            var sb = document.getElementById("sidebar");
+            var ov = document.getElementById("sidebar-overlay");
+            if (sb) sb.classList.remove("mobile-open");
+            if (ov) ov.classList.remove("show");
+          }
+        });
+      });
+  }
+
+  function showSection(name) {
+    document.querySelectorAll(".dash-section").forEach(function (s) {
+      s.classList.add("hidden");
+    });
+    var target = document.getElementById("section-" + name);
+    if (target) target.classList.remove("hidden");
+  }
+
+  /* ══════════════════════════════════════
+     MODAL NOTIFIKASI
+  ══════════════════════════════════════ */
+  function initNotifModal() {
+    var btn = document.getElementById("btn-notif");
+    var modal = document.getElementById("modal-notif");
+    var close = document.getElementById("notif-close");
+    if (!btn || !modal) return;
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      modal.classList.toggle("aktif");
+    });
+
+    if (close) {
+      close.addEventListener("click", function () {
+        modal.classList.remove("aktif");
+      });
+    }
+
+    /* Klik di luar modal → tutup */
+    document.addEventListener("click", function (e) {
+      if (!modal.contains(e.target) && e.target !== btn) {
+        modal.classList.remove("aktif");
+      }
+    });
+  }
+
+  /* ══════════════════════════════════════
+     MODAL KONFIRMASI LOGOUT
+  ══════════════════════════════════════ */
+  function initLogoutModal() {
+    var modal = document.getElementById("modal-logout");
+    var btnYa = document.getElementById("logout-ya");
+    var btnBatal = document.getElementById("logout-batal");
+    if (!modal) return;
+
+    /* Expose ke global supaya bisa dipanggil onclick="logout()" */
+    window.logout = function () {
+      modal.classList.add("aktif");
+      document.body.style.overflow = "hidden";
+    };
+
+    if (btnBatal) {
+      btnBatal.addEventListener("click", function () {
+        modal.classList.remove("aktif");
+        document.body.style.overflow = "";
+      });
+    }
+
+    if (btnYa) {
+      btnYa.addEventListener("click", function () {
+        /* Hapus session lalu redirect */
+        try {
+          localStorage.removeItem("tpq_user");
+          sessionStorage.clear();
+        } catch (e) {}
+        window.location.href = "../login.html";
+      });
+    }
+
+    /* Klik overlay → batal */
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        modal.classList.remove("aktif");
+        document.body.style.overflow = "";
+      }
+    });
+  }
 })();

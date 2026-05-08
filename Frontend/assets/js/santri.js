@@ -4,7 +4,7 @@
 
 const SUPABASE_URL = "https://bsuozojhtrkdehvjppdi.supabase.co";
 const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzdW96b3FocnRrZGVodmpwcGRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NzYzMDMsImV4cCI6MjA5MzI1MjMwM30.9AJshPyN4n3kED7aDaJGCkYLAx7txFaRiOSpyRm-ouk";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzdW96b2podHJrZGVodmpwcGRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NzYzMDMsImV4cCI6MjA5MzI1MjMwM30.9AJshPyN4n3kED7aDaJGCkYLAx7txFaRiOSpyRm-ouk";
 
 // ─── Inisialisasi Supabase ────────────────────────────────────────────────────
 // Supabase dimuat dari file LOKAL: assets/js/supabase.min.js
@@ -116,7 +116,7 @@ async function loginSantri(nis, password) {
   try {
     const { data, error } = await window.supabaseClient
       .from("santri")
-      .select("id, nis, nama_lengkap, kelas, tingkat, status")
+      .select("id, nis, nama_lengkap, kelas, tingkat, status, password")
       .eq("nis", nis.toUpperCase()) // NIS diubah uppercase agar tidak case-sensitive
       .single();
 
@@ -256,8 +256,8 @@ window.handleLogin = async function (event) {
     setTimeout(() => {
       window.location.href =
         currentRole === "santri"
-          ? "./santri/dashboard.html"
-          : "./ortu/dashboard.html";
+          ? "./dashboard-santri.html"
+          : "./dashboard-ortu.html";
     }, 1000);
   } else {
     showToast(result.message);

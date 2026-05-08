@@ -3450,6 +3450,331 @@ body {
   animation: fadeIn .4s .3s ease both;
 }
 
+/* ══════════════════════════════════════
+   SIDEBAR COLLAPSED (DESKTOP)
+══════════════════════════════════════ */
+
+.sidebar {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s ease;
+}
+
+/* Desktop collapsed: icon-only 72px */
+
+@media (min-width: 768px) {
+  .sidebar.collapsed {
+    width: 72px;
+  }
+
+  .sidebar.collapsed .main-content {
+    margin-left: 72px;
+  }
+
+  /* Sembunyikan semua teks saat collapsed */
+
+  .sidebar.collapsed .sidebar-logo a > div:last-child,
+  .sidebar.collapsed .nav-item span:not(.nav-icon),
+  .sidebar.collapsed .nav-badge,
+  .sidebar.collapsed .sidebar-section-label,
+  .sidebar.collapsed .user-card .overflow-hidden {
+    display: none;
+  }
+
+  /* Logo icon center saat collapsed */
+
+  .sidebar.collapsed .sidebar-logo a {
+    justify-content: center;
+  }
+
+  /* Nav item center icon */
+
+  .sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding: 11px;
+    position: relative;
+  }
+
+  /* Tooltip saat hover nav-item collapsed */
+
+  .sidebar.collapsed .nav-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--navy);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 100;
+  }
+
+  .sidebar.collapsed .nav-item:hover::after {
+    opacity: 1;
+  }
+
+  /* User avatar center */
+
+  .sidebar.collapsed .user-card {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  /* Main content margin menyesuaikan */
+
+  .main-content {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .main-content.expanded {
+    margin-left: 72px;
+  }
+}
+
+/* ══════════════════════════════════════
+   MODAL NOTIFIKASI
+══════════════════════════════════════ */
+
+.notif-modal {
+  position: fixed;
+  top: 68px;
+  right: 24px;
+  width: 320px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(10, 26, 64, 0.15);
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.notif-modal.aktif {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notif-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.notif-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.notif-close-btn:hover {
+  color: var(--navy);
+}
+
+.notif-body {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+  cursor: default;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-item:hover {
+  background: var(--gray-soft);
+}
+
+.notif-item.unread {
+  background: #f0f4ff;
+}
+
+.notif-item.unread:hover {
+  background: #e8eeff;
+}
+
+.notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--navy);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.notif-msg {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.notif-time {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.notif-footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.notif-markall {
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.notif-markall:hover {
+  opacity: 0.7;
+}
+
+/* ══════════════════════════════════════
+   MODAL LOGOUT KONFIRMASI
+══════════════════════════════════════ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.modal-overlay.aktif {
+  opacity: 1;
+  visibility: visible;
+}
+
+.logout-modal-box {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.aktif .logout-modal-box {
+  transform: translateY(0) scale(1);
+}
+
+.logout-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #eef2ff;
+  border: 2px solid #c7d2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.logout-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.logout-desc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.logout-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-btn-batal {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.logout-btn-batal:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.logout-btn-ya {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: var(--grad-main);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.logout-btn-ya:hover {
+  opacity: 0.88;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -4006,6 +4331,10 @@ video {
 
 .visible {
   visibility: visible;
+}
+
+.collapse {
+  visibility: collapse;
 }
 
 .static {
