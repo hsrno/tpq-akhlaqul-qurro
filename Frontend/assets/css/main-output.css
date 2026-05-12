@@ -1557,6 +1557,44 @@
   margin-bottom: 20px;
 }
 
+.poin-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Ringan: 1–9 poin */
+
+.poin-low {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Sedang: 10–19 poin */
+
+.poin-mid {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+/* Berat: 20–69 poin */
+
+.poin-high {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Sangat berat: 70+ poin */
+
+.poin-max {
+  background: #fecdd3;
+  color: #9f1239;
+  border: 1px solid #fca5a5;
+}
+
 .sanction-box strong {
   display: block;
   margin-bottom: 6px;
@@ -4495,10 +4533,6 @@ video {
   display: inline-block;
 }
 
-.inline {
-  display: inline;
-}
-
 .flex {
   display: flex;
 }
@@ -5065,8 +5099,8 @@ video {
   font-weight: 600;
 }
 
-.uppercase {
-  text-transform: uppercase;
+.lowercase {
+  text-transform: lowercase;
 }
 
 .leading-relaxed {
