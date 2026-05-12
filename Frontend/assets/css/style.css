@@ -1,0 +1,646 @@
+@import "./pages.css";
+@import "./dashboard.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════
+   TPQ AKHLAQUL QURRO' — style.css
+   Global styles & component library
+   (halaman-spesifik → lihat pages.css)
+
+   SECTIONS:
+   1.  CSS VARIABLES
+   2.  BASE / RESET
+   3.  NAVBAR & DROPDOWN
+   4.  MOBILE MENU & ACCORDION
+   5.  LANGUAGE TOGGLE BUTTONS
+   6.  BUTTONS
+   7.  BADGE
+   8.  HERO SECTION (index)
+   9.  SEARCH BOX
+   10. MENU CARDS (icon grid)
+   11. STAT CARDS
+   12. PROGRAM CARDS
+   13. SECTION HEADER
+   14. CTA BANNER
+   15. WA FLOAT BUTTON
+   16. SOCIAL BUTTONS
+   17. BAR CHART ANIMATION
+   18. UTILITY HELPERS
+   ════════════════════════════════════════ */
+
+
+/* ════════════════════════════════════════
+   1. CSS VARIABLES
+   ════════════════════════════════════════ */
+:root {
+  /* Brand colours */
+  --navy:        #0A1A40;
+  --navy-dark:   #060e25;
+  --navy-light:  #1b3a6b;
+  --green:       #1A7A4A;
+  --green-light: #22a35e;
+  --gold:        #C8960C;
+  --gold-light:  #F5C842;
+
+  /* Neutrals */
+  --border:     #e5e9f2;
+  --gray-soft:  #f4f6fb;
+  --soft:       #e5e9f2;   /* alias --border, dipakai di HTML */
+
+  /* Gradients */
+  --grad-main:  linear-gradient(135deg, #0A1A40 0%, #1b3a6b 60%, #1A7A4A 100%);
+  --grad-green: linear-gradient(135deg, #1A7A4A, #22a35e);
+  --grad-navy:  linear-gradient(135deg, #0A1A40, #1b3a6b);
+  --grad-quran: linear-gradient(135deg, #fff7cd, #fde68a);
+  --grad-study: linear-gradient(135deg, #dbeafe, #93c5fd);
+  --grad-char:  linear-gradient(135deg, #d1fae5, #6ee7b7);
+}
+
+/* Tailwind-style gradient utilities */
+.bg-grad-main  { background: var(--grad-main); }
+.bg-grad-green { background: var(--grad-green); }
+.bg-grad-navy  { background: var(--grad-navy); }
+
+/* Colour utilities tidak ada di Tailwind default */
+.text-green  { color: var(--green); }
+.text-gold   { color: var(--gold); }
+.bg-soft     { background: var(--gray-soft); }
+.border-soft { border-color: var(--border) !important; }
+
+
+/* ════════════════════════════════════════
+   2. BASE / RESET
+   ════════════════════════════════════════ */
+/* Plus Jakarta Sans di-load via <link> di HTML */
+body {
+  font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+a   { text-decoration: none; color: inherit; }
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+
+
+/* ════════════════════════════════════════
+   3. NAVBAR & DROPDOWN
+   ════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .25s;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(10, 26, 64, .10);
+}
+
+/* Desktop nav links */
+.nav-link {
+  font-size: .875rem;
+  font-weight: 600;
+  color: #374151;
+  transition: color .2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.nav-link:hover { color: var(--navy); }
+
+/* Dropdown */
+.dropdown-wrap { position: relative; }
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(10, 26, 64, .13);
+  padding: 8px;
+  min-width: 200px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 200;
+}
+.dropdown-wrap:hover .dropdown-menu,
+.dropdown-wrap:focus-within .dropdown-menu { display: flex; }
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--navy);
+  transition: background .15s;
+  white-space: nowrap;
+}
+.dropdown-item:hover { background: var(--gray-soft); }
+.dropdown-item svg   { flex-shrink: 0; }
+
+
+/* ════════════════════════════════════════
+   4. MOBILE MENU & ACCORDION
+   ════════════════════════════════════════ */
+
+/* ── Mobile menu — satu deklarasi lengkap ── */
+#mobile-menu {
+  position: relative;
+  z-index: 99;
+  display: block !important;   /* override Tailwind class="hidden" */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity    0.30s ease;
+}
+#mobile-menu.open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* ── Hamburger → X animation ── */
+#menu-btn svg rect {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+#menu-btn.menu-open svg rect:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#menu-btn.menu-open svg rect:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+#menu-btn.menu-open svg rect:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Link & trigger di dalam mobile menu ── */
+#mobile-menu a:not(.btn-portal-pro),
+#mobile-menu button.mobile-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  width: 100%;
+}
+#mobile-menu a:not(.btn-portal-pro):hover,
+#mobile-menu button.mobile-acc-trigger:hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+  padding-left: 16px;
+}
+#mobile-menu a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  padding-left: 16px;
+  border-left: 3px solid var(--navy);
+}
+
+/* Submenu accordion links */
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro) {
+  font-size: 0.85rem;
+  padding: 8px 12px 8px 20px;
+  color: #6b7280;
+}
+#mobile-menu .mobile-accordion a:not(.btn-portal-pro):hover {
+  background: #f0f4ff;
+  color: var(--navy);
+  font-weight: 600;
+}
+#mobile-menu .mobile-accordion a.mobile-active:not(.btn-portal-pro) {
+  background: #eef2ff;
+  color: var(--navy);
+  font-weight: 700;
+  border-left: 3px solid var(--navy-light);
+}
+
+/* ── Accordion trigger ── */
+.mobile-acc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Chevron rotation */
+.acc-chevron { transition: transform .3s; }
+.mobile-acc-trigger.open .acc-chevron { transform: rotate(180deg); }
+
+/* Collapsible content */
+.mobile-accordion {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+.mobile-accordion.open { max-height: 300px; }
+
+
+/* ════════════════════════════════════════
+   5. LANGUAGE TOGGLE BUTTONS
+   ════════════════════════════════════════ */
+.lang-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: .75rem;
+  font-weight: 700;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+
+.lang-btn.active-id   { background: var(--green); color: white; border-color: var(--green); }
+.lang-btn.inactive-id { background: transparent;  color: #9ca3af; border-color: var(--border); }
+.lang-btn.active-en   { background: var(--navy);  color: white; border-color: var(--navy); }
+.lang-btn.inactive-en { background: transparent;  color: #9ca3af; border-color: var(--border); }
+.lang-btn:hover       { opacity: .85; }
+
+
+/* ════════════════════════════════════════
+   6. BUTTONS
+   ════════════════════════════════════════ */
+
+/* Portal Santri — pill green gradient */
+.btn-portal-pro {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(21, 128, 61, 0.25);
+  transition: all 0.3s ease;
+}
+.btn-portal-pro:hover  { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4); }
+.btn-portal-pro:active { transform: translateY(0); }
+
+/* Portal/CTA — navy gradient (halaman pages) */
+.btn-portal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grad-main);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  transition: opacity .2s, transform .2s;
+}
+.btn-portal:hover { opacity: .9; transform: translateY(-1px); }
+
+/* Gold/yellow CTA */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F5C842;
+  color: var(--navy-dark);
+  font-weight: 700;
+  font-size: .875rem;
+  padding: 11px 22px;
+  border-radius: 12px;
+  transition: background .2s, transform .2s;
+}
+.btn-gold:hover { background: #fbbf24; transform: translateY(-1px); }
+
+/* White outline (dark backgrounds) */
+.btn-outline-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: white;
+  font-weight: 700;
+  font-size: .875rem;
+  padding: 11px 22px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  transition: border-color .2s, background .2s;
+}
+.btn-outline-white:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* White fill + navy text */
+.btn-white-navy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 9px 18px;
+  border-radius: 12px;
+  border: 2px solid var(--navy);
+  transition: all .2s;
+}
+.btn-white-navy:hover { background: var(--navy); color: white; }
+
+
+/* ════════════════════════════════════════
+   7. BADGE
+   ════════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+
+/* ════════════════════════════════════════
+   8. HERO SECTION (index.html)
+   ════════════════════════════════════════ */
+.hero-section {
+  background: var(--grad-main);
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.anim-1 { animation: fadeSlideUp .65s ease both; }
+.anim-2 { animation: fadeSlideUp .65s .15s ease both; }
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.float { animation: floatBob 4s ease-in-out infinite; }
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
+}
+
+
+/* ════════════════════════════════════════
+   9. SEARCH BOX
+   ════════════════════════════════════════ */
+.search-wrap {
+  margin-top: -24px;
+  position: relative;
+  z-index: 10;
+}
+
+.search-box {
+  display: flex;
+  align-items: stretch;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(10, 26, 64, .14);
+  border: 1px solid var(--border);
+}
+
+.search-cat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: var(--grad-main);
+  color: white;
+  font-size: .78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: .875rem;
+  color: #374151;
+}
+.search-box input::placeholder { color: #9ca3af; }
+
+
+/* ════════════════════════════════════════
+   10. MENU CARDS (icon grid — index.html)
+   ════════════════════════════════════════ */
+.menu-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  transition: all .25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.menu-card:hover {
+  box-shadow: 0 8px 24px rgba(10, 26, 64, .12);
+  transform: translateY(-3px);
+  border-color: var(--navy-light);
+}
+
+
+/* ════════════════════════════════════════
+   11. STAT CARDS (index.html)
+   ════════════════════════════════════════ */
+.stat-card {
+  border-radius: 16px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: transform .2s, box-shadow .2s;
+}
+.hover-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .15);
+}
+
+.bg-stat-1 { background: linear-gradient(135deg, #0A1A40, #1b3a6b); }
+.bg-stat-2 { background: linear-gradient(135deg, #1A7A4A, #22a35e); }
+.bg-stat-3 { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+.bg-stat-4 { background: linear-gradient(135deg, #b45309, #d97706); }
+
+
+/* ════════════════════════════════════════
+   12. PROGRAM CARDS (index.html)
+   ════════════════════════════════════════ */
+.prog-card {
+  background: white;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 28px;
+  transition: all .25s;
+}
+.prog-card:hover {
+  box-shadow: 0 12px 32px rgba(10, 26, 64, .11);
+  transform: translateY(-3px);
+}
+
+
+/* ════════════════════════════════════════
+   13. SECTION HEADER (title + "see more")
+   ════════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+.section-link {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--green);
+  transition: opacity .2s;
+}
+.section-link:hover { opacity: .75; }
+
+
+/* ════════════════════════════════════════
+   14. CTA BANNER (index.html contact)
+   ════════════════════════════════════════ */
+.cta-banner {
+  background: var(--grad-main);
+  border-radius: 20px;
+  padding: 32px;
+  overflow: visible;
+  position: relative;
+  isolation: isolate;
+}
+/* Pseudo-element dekoratif — di bawah konten */
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+/* Konten tetap di atas pseudo-element */
+.cta-banner > div {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ════════════════════════════════════════
+   15. WA FLOAT BUTTON
+   ════════════════════════════════════════ */
+.wa-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25d366;
+  color: white;
+  font-weight: 700;
+  font-size: .82rem;
+  padding: 12px 18px;
+  border-radius: 50px;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, .40);
+  transition: transform .2s, box-shadow .2s;
+  text-decoration: none;
+}
+.wa-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, .50);
+}
+
+/* Geser ke atas jika ada bottom bar di sub-pages */
+body.has-bottom-bar .wa-btn { bottom: 72px; }
+
+
+/* ════════════════════════════════════════
+   16. SOCIAL BUTTONS (footer)
+   ════════════════════════════════════════ */
+.social-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+}
+.social-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+
+/* ════════════════════════════════════════
+   17. BAR CHART ANIMATION (menu card icon)
+   ════════════════════════════════════════ */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 28px;
+}
+.bar {
+  width: 7px;
+  border-radius: 3px 3px 0 0;
+  background: var(--green);
+}
+.bar-1 { height: 50%; animation: barGrow 1.5s 0s   ease-in-out infinite alternate; }
+.bar-2 { height: 80%; animation: barGrow 1.5s .2s  ease-in-out infinite alternate; }
+.bar-3 { height: 65%; animation: barGrow 1.5s .4s  ease-in-out infinite alternate; }
+
+@keyframes barGrow {
+  from { opacity: .5; transform: scaleY(.7); }
+  to   { opacity: 1;  transform: scaleY(1); }
+}
+
+
+/* ════════════════════════════════════════
+   18. UTILITY HELPERS
+   ════════════════════════════════════════ */
+.shadow-2 { box-shadow: 0 4px 16px rgba(10, 26, 64, .10); }
